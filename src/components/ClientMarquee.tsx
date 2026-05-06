@@ -1,34 +1,41 @@
 import { motion } from 'motion/react';
-import { CLIENTS } from '../constants';
+
+const TECH_ITEMS = [
+  'React', 'Next.js', 'TypeScript', 'Node.js', 'Firebase',
+  'PostgreSQL', 'Tailwind CSS', 'Framer Motion', 'Stripe',
+  'Python', 'MongoDB', 'Express', 'Three.js', 'OpenAI API'
+];
 
 export default function ClientMarquee() {
+  const doubled = [...TECH_ITEMS, ...TECH_ITEMS];
+
   return (
-    <div className="w-full bg-surface border-y border-neutral-900 py-10 overflow-hidden noise">
-      <div className="flex whitespace-nowrap">
+    <div
+      className="w-full border-t border-b overflow-hidden select-none"
+      style={{
+        backgroundColor: 'var(--color-light-alt)',
+        borderColor: 'var(--color-light-border)',
+      }}
+    >
+      <div className="flex whitespace-nowrap py-4">
         <motion.div
-          animate={{ x: [0, -1000] }}
-          transition={{
-            duration: 40,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-          className="flex items-center gap-20 px-10"
+          animate={{ x: [0, '-50%'] }}
+          transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+          className="flex items-center gap-10 pl-10"
         >
-          {CLIENTS.map((client, idx) => (
-            <span 
-              key={`client-1-${idx}`} 
-              className="text-2xl md:text-4xl font-display font-medium text-neutral-800 hover:text-neutral-700 transition-colors tracking-tighter"
+          {doubled.map((item, idx) => (
+            <span
+              key={idx}
+              className="font-mono text-[11px] uppercase tracking-[0.22em] shrink-0"
+              style={{ color: 'var(--color-light-secondary)' }}
             >
-              {client}
-            </span>
-          ))}
-          {/* Repeat for seamless loop */}
-          {CLIENTS.map((client, idx) => (
-            <span 
-              key={`client-2-${idx}`} 
-              className="text-2xl md:text-4xl font-display font-medium text-neutral-800 hover:text-neutral-700 transition-colors tracking-tighter"
-            >
-              {client}
+              {item}
+              <span
+                className="ml-10"
+                style={{ color: 'var(--color-light-border)' }}
+              >
+                ×
+              </span>
             </span>
           ))}
         </motion.div>

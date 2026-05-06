@@ -1,72 +1,140 @@
-import { motion } from 'motion/react';
+import { motion, useInView } from 'motion/react';
 import { SERVICES } from '../constants';
 import { useNavigate } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
+import { useRef, useState } from 'react';
 
 export default function Services() {
-  const navigate = useNavigate();
+  const navigate  = useNavigate();
+  const [hovered, setHovered] = useState<string | null>(null);
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <section id="hizmetler" className="py-24 bg-background border-t border-border">
-      <div className="max-w-7xl mx-auto px-6">
+    <section
+      id="hizmetler"
+      style={{ backgroundColor: 'var(--color-light)', borderTop: '1px solid var(--color-light-border)' }}
+    >
+      <div className="max-w-7xl mx-auto px-6 py-24 md:py-32">
 
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-8">
+        <div ref={ref} className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
           <div>
-            <div className="section-label mb-5">Hizmetler</div>
-            <h2 className="text-[1.75rem] md:text-[2.25rem] font-medium leading-[1.15] tracking-tight max-w-lg">
-              Hangi konularda<br />destek olabiliriz?
-            </h2>
+            <motion.div
+              initial={{ opacity: 0, x: -12 }}
+              animate={inView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.5 }}
+              className="section-label-light mb-6"
+            >
+              Hizmetler
+            </motion.div>
+            <div style={{ overflow: 'hidden' }}>
+              <motion.h2
+                initial={{ y: '100%' }}
+                animate={inView ? { y: 0 } : {}}
+                transition={{ duration: 0.85, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+                className="font-bold leading-[1.02]"
+                style={{
+                  fontFamily:    'var(--font-display)',
+                  color:         'var(--color-light-text)',
+                  fontSize:      'clamp(1.9rem, 3.8vw, 3.4rem)',
+                  letterSpacing: '-0.04em',
+                }}
+              >
+                Hangi konularda<br />destek olabiliriz?
+              </motion.h2>
+            </div>
           </div>
-          <p className="text-[13px] text-secondary leading-relaxed max-w-xs">
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.25 }}
+            className="text-[14px] leading-relaxed max-w-xs"
+            style={{ color: 'var(--color-light-secondary)' }}
+          >
             İşini özenle yapan bir butik stüdyonun elinden çıkan pratik dijital çözümler.
-          </p>
+          </motion.p>
         </div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-2.5">
+        {/* Service rows */}
+        <div className="border-t" style={{ borderColor: 'var(--color-light-border)' }}>
           {SERVICES.map((service, i) => (
             <motion.div
               key={service.id}
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.05, duration: 0.4 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ delay: i * 0.07, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
               onClick={() => navigate(`/hizmet/${service.id}`)}
-              className="group relative bg-neutral-800/60 border border-neutral-700/60 rounded-xl overflow-hidden cursor-pointer aspect-[3/4] flex flex-col justify-between p-5 hover:border-neutral-500/60 hover:bg-neutral-800/80 transition-all duration-500"
+              onMouseEnter={() => setHovered(service.id)}
+              onMouseLeave={() => setHovered(null)}
+              className="group flex items-center justify-between gap-6 py-8 border-b cursor-pointer px-4 -mx-4"
+              style={{
+                borderColor:     'var(--color-light-border)',
+                backgroundColor: hovered === service.id ? 'var(--color-light-alt)' : 'transparent',
+                transition:      'background-color 0.2s ease',
+              }}
             >
-              {/* Subtle image background */}
-              <div className="absolute inset-0">
-                <img
-                  src={service.image}
-                  alt={service.title}
-                  className="w-full h-full object-cover opacity-100 group-hover:scale-[1.06] transition-all duration-700"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/90 via-neutral-900/30 to-transparent" />
-              </div>
-
-              {/* Top: step number */}
-              <div className="relative z-10">
-                <span className="text-[10px] font-mono text-neutral-400 tracking-widest">
+              {/* Left */}
+              <div className="flex items-center gap-8 md:gap-12 min-w-0">
+                <span
+                  className="font-mono text-[11px] shrink-0 w-7 tabular-nums"
+                  style={{
+                    color:      hovered === service.id ? 'var(--color-highlight)' : 'var(--color-light-secondary)',
+                    transition: 'color 0.2s ease',
+                  }}
+                >
                   {String(i + 1).padStart(2, '0')}
                 </span>
-              </div>
-
-              {/* Bottom: title + arrow */}
-              <div className="relative z-10">
-                <div className="flex items-start justify-between gap-2 mb-1.5">
-                  <h3 className="text-[13px] md:text-[14px] font-medium text-neutral-100 leading-snug">
+                <div className="min-w-0">
+                  <h3
+                    className="text-[17px] md:text-[21px] font-bold leading-snug mb-1"
+                    style={{
+                      fontFamily:    'var(--font-display)',
+                      color:         'var(--color-light-text)',
+                      letterSpacing: '-0.025em',
+                      transform:     hovered === service.id ? 'translateX(6px)' : 'none',
+                      transition:    'transform 0.25s ease',
+                    }}
+                  >
                     {service.title}
                   </h3>
-                  <ArrowUpRight
-                    size={13}
-                    className="text-neutral-500 group-hover:text-neutral-300 transition-colors duration-300 shrink-0 mt-0.5"
+                  <p className="text-[12px] leading-relaxed hidden sm:block" style={{ color: 'var(--color-light-secondary)' }}>
+                    {service.description}
+                  </p>
+                </div>
+              </div>
+
+              {/* Right */}
+              <div className="flex items-center gap-3 shrink-0">
+                <div className="hidden md:block w-20 h-13 overflow-hidden" style={{ borderRadius: '2px' }}>
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="w-full h-full object-cover"
+                    style={{
+                      transform: hovered === service.id ? 'scale(1.1) translateZ(0)' : 'scale(1) translateZ(0)',
+                      transition: 'transform 0.6s ease',
+                      filter: 'contrast(1.05) saturate(1.08)',
+                    }}
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
-                <p className="text-[11px] text-neutral-400 leading-relaxed line-clamp-2">
-                  {service.description}
-                </p>
+                <div
+                  className="w-9 h-9 border flex items-center justify-center"
+                  style={{
+                    borderRadius:    '2px',
+                    backgroundColor: hovered === service.id ? 'var(--color-highlight)' : 'transparent',
+                    borderColor:     hovered === service.id ? 'var(--color-highlight)' : 'var(--color-light-border)',
+                    transition:      'all 0.2s ease',
+                  }}
+                >
+                  <ArrowUpRight
+                    size={15}
+                    style={{ color: hovered === service.id ? 'var(--color-on-highlight)' : 'var(--color-light-secondary)' }}
+                  />
+                </div>
               </div>
             </motion.div>
           ))}

@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Mail, MapPin, Send, Clock, CheckCircle2, ArrowUpRight } from 'lucide-react';
+import { Mail, MapPin, Send, Clock, CheckCircle2, Phone } from 'lucide-react';
 import { db } from '../lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-
 
 function WhatsAppIcon({ size = 24 }: { size?: number }) {
   return (
@@ -14,44 +13,52 @@ function WhatsAppIcon({ size = 24 }: { size?: number }) {
 }
 
 const contactItems = [
-  {
-    icon: Mail,
-    label: 'E-POSTA',
-    value: 'iletisim@butiqstudio.com',
-    href: 'mailto:iletisim@butiqstudio.com',
-  },
-  {
-    icon: WhatsAppIcon,
-    label: 'WHATSAPP',
-    value: '+90 (536) 773 62 42',
-    href: 'https://wa.me/905367736242',
-  },
-  {
-    icon: MapPin,
-    label: 'OFİS',
-    value: 'Bahçelievler, İstanbul',
-    href: null,
-  },
-  {
-    icon: Clock,
-    label: 'ÇALIŞMA SAATLERİ',
-    value: 'Pzt–Cum, 09:00–18:00',
-    href: null,
-  },
+  { icon: Mail, label: 'E-Posta', value: 'iletisim@butiqstudio.com', href: 'mailto:iletisim@butiqstudio.com' },
+  { icon: WhatsAppIcon, label: 'WhatsApp', value: '+90 (536) 773 62 42', href: 'https://wa.me/905367736242' },
+  { icon: MapPin, label: 'Ofis', value: 'Bahçelievler, İstanbul', href: null },
+  { icon: Clock, label: 'Çalışma Saatleri', value: 'Pzt – Cum, 09:00 – 18:00', href: null },
 ];
 
 const services = [
   'Web Tasarım & Geliştirme',
   'SaaS Uygulama Geliştirme',
   'E-Ticaret Çözümleri',
-  'Marka & Kurumsal Kimlik',
+  'Mobil Uygulama',
   'Diğer',
 ];
 
-const socials = ['Instagram', 'LinkedIn', 'Twitter'];
+function Field({ label, name, type, placeholder }: { label: string; name: string; type: string; placeholder: string }) {
+  return (
+    <div>
+      <label
+        className="block font-mono text-[10px] uppercase tracking-[0.2em] mb-2.5"
+        style={{ color: 'var(--color-light-secondary)' }}
+      >
+        {label}
+      </label>
+      <input
+        required
+        name={name}
+        type={type}
+        placeholder={placeholder}
+        className="w-full border px-4 py-3.5 text-[14px] outline-none transition-colors"
+        style={{
+          background: 'white',
+          borderColor: 'var(--color-light-border)',
+          color: 'var(--color-light-text)',
+          borderRadius: '2px',
+        }}
+        onFocus={e => (e.currentTarget.style.borderColor = 'var(--color-highlight)')}
+        onBlur={e => (e.currentTarget.style.borderColor = 'var(--color-light-border)')}
+      />
+    </div>
+  );
+}
 
 export default function ContactPage() {
-  const [formState, setFormState] = useState<'idle' | 'submitting' | 'success'>('idle');
+  useEffect(() => { document.title = 'İletişim — Butiq Studio'; }, []);
+
+  const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [agreed, setAgreed] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -69,243 +76,290 @@ export default function ContactPage() {
       });
       setFormState('success');
     } catch {
-      setFormState('idle');
+      setFormState('error');
     }
   };
 
   return (
-    <div className="min-h-screen bg-background text-primary">
-      {/* Hero strip */}
-      <div className="border-b border-border pt-32 pb-16 px-6">
+    <div className="min-h-screen bg-background">
+
+      {/* Page header - dark */}
+      <div className="bg-background border-b border-border pt-28 pb-16 px-6">
         <div className="max-w-7xl mx-auto">
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
             className="section-label mb-6"
           >
             İletişim
-          </motion.p>
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.05 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-display font-medium leading-[1.05] tracking-tight max-w-4xl"
-          >
-            Bir projeniz mi var?{' '}
-            <span className="italic text-secondary">Konuşalım.</span>
-          </motion.h1>
+          </motion.div>
+          <div className="overflow-hidden">
+            <motion.h1
+              initial={{ y: '110%' }}
+              animate={{ y: 0 }}
+              transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+              className="font-bold text-primary leading-[1.0]"
+              style={{
+                fontSize: 'clamp(2.5rem, 7vw, 6rem)',
+                letterSpacing: '-0.04em',
+              }}
+            >
+              Bir projeniz mi var?
+            </motion.h1>
+          </div>
+          <div className="overflow-hidden">
+            <motion.p
+              initial={{ y: '110%' }}
+              animate={{ y: 0 }}
+              transition={{ duration: 0.85, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="font-bold leading-[1.0]"
+              style={{
+                fontSize: 'clamp(2.5rem, 7vw, 6rem)',
+                letterSpacing: '-0.04em',
+                color: 'var(--color-highlight)',
+              }}
+            >
+              Konuşalım.
+            </motion.p>
+          </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-20">
-        <div className="grid lg:grid-cols-[1fr_1.1fr] gap-16 xl:gap-24">
+      {/* Content - light */}
+      <div style={{ backgroundColor: 'var(--color-light)' }}>
+        <div className="max-w-7xl mx-auto px-6 py-20">
+          <div className="grid lg:grid-cols-[1fr_1.4fr] gap-16 xl:gap-24">
 
-          {/* Left — contact info */}
-          <motion.div
-            initial={{ opacity: 0, x: -24 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.1 }}
-            className="flex flex-col justify-between gap-16"
-          >
-            <div>
-              <p className="text-neutral-400 font-light text-lg leading-relaxed max-w-sm mb-14">
+            {/* Left — contact info */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+            >
+              <p
+                className="text-base leading-relaxed max-w-sm mb-12"
+                style={{ color: 'var(--color-light-secondary)' }}
+              >
                 Fikirlerinizi gerçeğe dönüştürmek için sabırsızlanıyoruz. Formu doldurun, en geç 24 saat içinde dönüş yapalım.
               </p>
 
-              <ul className="space-y-0 divide-y divide-border">
+              <ul className="border-t" style={{ borderColor: 'var(--color-light-border)' }}>
                 {contactItems.map(({ icon: Icon, label, value, href }) => (
-                  <li key={label} className="flex items-center gap-5 py-5 group">
-                    <div className="w-10 h-10 rounded-xl bg-surface border border-border flex items-center justify-center text-highlight/90 shrink-0 group-hover:border-accent/50 transition-colors">
-                      <Icon size={17} />
+                  <li
+                    key={label}
+                    className="flex items-center gap-5 py-5 border-b group"
+                    style={{ borderColor: 'var(--color-light-border)' }}
+                  >
+                    <div
+                      className="w-10 h-10 border flex items-center justify-center shrink-0"
+                      style={{ borderColor: 'var(--color-light-border)', borderRadius: '2px', color: 'var(--color-light-secondary)' }}
+                    >
+                      <Icon size={16} />
                     </div>
-                    <div className="min-w-0">
-                      <p className="text-[10px] text-neutral-600 uppercase tracking-widest font-mono mb-0.5">{label}</p>
+                    <div>
+                      <p
+                        className="font-mono text-[9px] uppercase tracking-[0.2em] mb-0.5"
+                        style={{ color: 'var(--color-light-secondary)' }}
+                      >
+                        {label}
+                      </p>
                       {href ? (
-                        <a href={href} target={href.startsWith('https') ? '_blank' : undefined} rel={href.startsWith('https') ? 'noopener noreferrer' : undefined} className="text-sm font-medium text-primary hover:text-highlight/90 transition-colors truncate block">
+                        <a
+                          href={href}
+                          target={href.startsWith('https') ? '_blank' : undefined}
+                          rel="noopener noreferrer"
+                          className="text-[14px] font-medium hover:opacity-60 transition-opacity"
+                          style={{ color: 'var(--color-light-text)' }}
+                        >
                           {value}
                         </a>
                       ) : (
-                        <p className="text-sm font-medium text-primary">{value}</p>
+                        <p className="text-[14px] font-medium" style={{ color: 'var(--color-light-text)' }}>
+                          {value}
+                        </p>
                       )}
                     </div>
-                    {href && (
-                      <ArrowUpRight size={14} className="ml-auto text-neutral-700 group-hover:text-highlight/90 transition-colors shrink-0" />
-                    )}
                   </li>
                 ))}
               </ul>
-            </div>
 
-            {/* Socials */}
-            <div>
-              <p className="text-[10px] text-neutral-600 uppercase tracking-widest font-mono mb-5">Sosyal Medya</p>
-              <div className="flex flex-wrap gap-3">
-                {socials.map(s => (
-                  <a
-                    key={s}
-                    href="#"
-                    className="px-4 py-2 rounded-xl border border-border text-xs font-mono text-neutral-400 hover:border-accent/50 hover:text-highlight/90 transition-all uppercase tracking-widest"
-                  >
-                    {s}
-                  </a>
-                ))}
+              {/* Quick action */}
+              <div className="mt-8 flex flex-col gap-3">
+                <a
+                  href="https://wa.me/905367736242"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="h-11 px-6 inline-flex items-center gap-2.5 text-[13px] font-semibold bg-[#25D366] text-white hover:opacity-90 transition-opacity"
+                  style={{ borderRadius: '2px' }}
+                >
+                  <WhatsAppIcon size={15} />
+                  WhatsApp ile Hızlı İletişim
+                </a>
+                <a
+                  href="tel:+905367736242"
+                  className="h-11 px-6 border inline-flex items-center gap-2.5 text-[13px] font-medium hover:opacity-60 transition-opacity"
+                  style={{ borderColor: 'var(--color-light-border)', color: 'var(--color-light-text)', borderRadius: '2px' }}
+                >
+                  <Phone size={13} strokeWidth={1.5} />
+                  +90 (536) 773 62 42
+                </a>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
 
-          {/* Right — form */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15 }}
-          >
-            <AnimatePresence mode="wait">
-              {formState === 'success' ? (
-                <motion.div
-                  key="success"
-                  initial={{ opacity: 0, scale: 0.96 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="h-full min-h-[520px] flex flex-col items-center justify-center text-center px-8 bg-surface border border-border rounded-3xl"
-                >
-                  <div className="w-16 h-16 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6">
-                    <CheckCircle2 size={28} className="text-highlight/90" />
-                  </div>
-                  <h3 className="text-2xl font-display font-medium mb-3">Mesajınız Alındı</h3>
-                  <p className="text-neutral-400 font-light text-sm leading-relaxed max-w-xs mb-8">
-                    Ekibimiz talebinizi inceleyip en kısa sürede sizinle iletişime geçecek.
-                  </p>
-                  <button
-                    onClick={() => { setFormState('idle'); setAgreed(false); }}
-                    className="px-6 py-3 rounded-xl border border-border text-sm font-medium hover:border-accent/50 hover:text-highlight/90 transition-all"
+            {/* Right — form */}
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.25, duration: 0.6 }}
+            >
+              <AnimatePresence mode="wait">
+                {formState === 'success' ? (
+                  <motion.div
+                    key="success"
+                    initial={{ opacity: 0, scale: 0.97 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="min-h-[480px] flex flex-col items-center justify-center text-center border p-12"
+                    style={{ borderColor: 'var(--color-light-border)', borderRadius: '2px', background: 'white' }}
                   >
-                    Yeni mesaj gönder
-                  </button>
-                </motion.div>
-              ) : (
-                <motion.form
-                  key="form"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  onSubmit={handleSubmit}
-                  className="bg-surface border border-border rounded-3xl p-8 md:p-10 space-y-7"
-                >
-                  <div className="grid sm:grid-cols-2 gap-6">
-                    <Field label="Ad Soyad" name="name" type="text" placeholder="Ahmet Yılmaz" />
-                    <Field label="E-posta" name="email" type="email" placeholder="ahmet@firma.com" />
-                  </div>
-
-                  <div>
-                    <label className="block text-[10px] text-neutral-500 uppercase tracking-widest font-mono mb-2.5">
-                      Hizmet
-                    </label>
-                    <select
-                      name="service"
-                      className="w-full bg-background border border-border rounded-xl px-4 py-3.5 text-sm outline-none focus:border-accent transition-colors text-neutral-300 appearance-none cursor-pointer"
+                    <div
+                      className="w-14 h-14 border flex items-center justify-center mb-6"
+                      style={{ borderColor: 'var(--color-highlight)', borderRadius: '2px' }}
                     >
-                      {services.map(s => <option key={s}>{s}</option>)}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-[10px] text-neutral-500 uppercase tracking-widest font-mono mb-2.5">
-                      Mesaj
-                    </label>
-                    <textarea
-                      required
-                      name="message"
-                      rows={5}
-                      placeholder="Projenizden kısaca bahsedin..."
-                      className="w-full bg-background border border-border rounded-xl px-4 py-3.5 text-sm outline-none focus:border-accent transition-colors resize-none"
-                    />
-                  </div>
-
-                  <label className="flex items-start gap-3 cursor-pointer group">
+                      <CheckCircle2 size={24} style={{ color: 'var(--color-highlight)' }} />
+                    </div>
+                    <h3
+                      className="text-2xl font-bold mb-3"
+                      style={{ color: 'var(--color-light-text)' }}
+                    >
+                      Mesajınız Alındı
+                    </h3>
+                    <p
+                      className="text-[14px] leading-relaxed max-w-xs mb-8"
+                      style={{ color: 'var(--color-light-secondary)' }}
+                    >
+                      Ekibimiz talebinizi inceleyip en kısa sürede sizinle iletişime geçecek.
+                    </p>
                     <button
-                      type="button"
-                      onClick={() => setAgreed(v => !v)}
-                      className={`mt-0.5 w-5 h-5 rounded-md border flex items-center justify-center shrink-0 transition-all ${agreed
-                          ? 'bg-highlight border-highlight text-white'
-                          : 'border-border group-hover:border-highlight/50'
-                        }`}
+                      onClick={() => { setFormState('idle'); setAgreed(false); }}
+                      className="h-10 px-6 text-[13px] font-medium border hover:opacity-60 transition-opacity"
+                      style={{ borderColor: 'var(--color-light-border)', color: 'var(--color-light-text)', borderRadius: '2px' }}
                     >
-                      {agreed && (
-                        <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
-                          <path d="M10 3L4.5 8.5L2 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
+                      Yeni Mesaj Gönder
+                    </button>
+                  </motion.div>
+                ) : (
+                  <motion.form
+                    key="form"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    onSubmit={handleSubmit}
+                    className="border p-8 md:p-10 space-y-6"
+                    style={{ borderColor: 'var(--color-light-border)', background: 'white', borderRadius: '2px' }}
+                  >
+                    <div className="grid sm:grid-cols-2 gap-5">
+                      <Field label="Ad Soyad" name="name" type="text" placeholder="Ahmet Yılmaz" />
+                      <Field label="E-posta" name="email" type="email" placeholder="ahmet@firma.com" />
+                    </div>
+
+                    <div>
+                      <label
+                        className="block font-mono text-[10px] uppercase tracking-[0.2em] mb-2.5"
+                        style={{ color: 'var(--color-light-secondary)' }}
+                      >
+                        Hizmet
+                      </label>
+                      <select
+                        name="service"
+                        className="w-full border px-4 py-3.5 text-[14px] outline-none transition-colors appearance-none cursor-pointer"
+                        style={{
+                          background: 'white',
+                          borderColor: 'var(--color-light-border)',
+                          color: 'var(--color-light-text)',
+                          borderRadius: '2px',
+                        }}
+                      >
+                        {services.map(s => <option key={s}>{s}</option>)}
+                      </select>
+                    </div>
+
+                    <div>
+                      <label
+                        className="block font-mono text-[10px] uppercase tracking-[0.2em] mb-2.5"
+                        style={{ color: 'var(--color-light-secondary)' }}
+                      >
+                        Mesaj
+                      </label>
+                      <textarea
+                        required
+                        name="message"
+                        rows={5}
+                        placeholder="Projenizden kısaca bahsedin..."
+                        className="w-full border px-4 py-3.5 text-[14px] outline-none transition-colors resize-none"
+                        style={{
+                          background: 'white',
+                          borderColor: 'var(--color-light-border)',
+                          color: 'var(--color-light-text)',
+                          borderRadius: '2px',
+                        }}
+                        onFocus={e => (e.currentTarget.style.borderColor = 'var(--color-highlight)')}
+                        onBlur={e => (e.currentTarget.style.borderColor = 'var(--color-light-border)')}
+                      />
+                    </div>
+
+                    <label className="flex items-start gap-3 cursor-pointer group">
+                      <button
+                        type="button"
+                        onClick={() => setAgreed(v => !v)}
+                        className="mt-0.5 w-5 h-5 border flex items-center justify-center shrink-0 transition-colors"
+                        style={{
+                          borderColor: agreed ? 'var(--color-highlight)' : 'var(--color-light-border)',
+                          background: agreed ? 'var(--color-highlight)' : 'white',
+                          borderRadius: '2px',
+                        }}
+                      >
+                        {agreed && (
+                          <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
+                            <path d="M10 3L4.5 8.5L2 6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        )}
+                      </button>
+                      <span className="text-[12px] leading-relaxed" style={{ color: 'var(--color-light-secondary)' }}>
+                        Gizlilik politikasını okudum ve verilerimin işlenmesini kabul ediyorum.
+                      </span>
+                    </label>
+
+                    {formState === 'error' && (
+                      <p className="text-[13px] text-center py-2 px-4 border" style={{ color: '#c0392b', borderColor: '#f5c6cb', background: '#fff5f5', borderRadius: '2px' }}>
+                        Bir hata oluştu. Lütfen tekrar deneyin veya WhatsApp'tan ulaşın.
+                      </p>
+                    )}
+
+                    <button
+                      type="submit"
+                      disabled={formState === 'submitting' || !agreed}
+                      onClick={() => { if (formState === 'error') setFormState('idle'); }}
+                      className="w-full h-12 text-[14px] font-bold flex items-center justify-center gap-2.5 transition-all disabled:opacity-40 disabled:cursor-not-allowed hover:opacity-90"
+                      style={{ background: 'var(--color-highlight)', color: 'var(--color-on-highlight)', borderRadius: '2px' }}
+                    >
+                      {formState === 'submitting' ? (
+                        <span className="opacity-70">Gönderiliyor…</span>
+                      ) : (
+                        <>
+                          Talep Gönder
+                          <Send size={14} />
+                        </>
                       )}
                     </button>
-                    <span className="text-xs text-neutral-500 leading-relaxed">
-                      Gizlilik politikasını okudum ve verilerimin işlenmesini kabul ediyorum.
-                    </span>
-                  </label>
-
-                  <button
-                    type="submit"
-                    disabled={formState === 'submitting' || !agreed}
-                    className="w-full h-14 rounded-xl bg-highlight text-white text-sm font-bold tracking-wide flex items-center justify-center gap-2.5 hover:bg-highlight/90 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
-                  >
-                    {formState === 'submitting' ? (
-                      <span className="opacity-70">Gönderiliyor…</span>
-                    ) : (
-                      <>
-                        Talep Gönder
-                        <Send size={15} />
-                      </>
-                    )}
-                  </button>
-                </motion.form>
-              )}
-            </AnimatePresence>
-          </motion.div>
-        </div>
-
-        {/* Map strip */}
-        <motion.div
-          initial={{ opacity: 0, y: 32 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.25 }}
-          className="mt-24 rounded-3xl border border-border overflow-hidden relative h-64 md:h-96 bg-neutral-900 group"
-        >
-          {/* grid lines */}
-          {[25, 50, 75].map(p => (
-            <React.Fragment key={p}>
-              <div className="absolute inset-x-0 h-px bg-white/[0.04]" style={{ top: `${p}%` }} />
-              <div className="absolute inset-y-0 w-px bg-white/[0.04]" style={{ left: `${p}%` }} />
-            </React.Fragment>
-          ))}
-          <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-highlight/5" />
-
-          {/* pin */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
-            <div className="w-14 h-14 rounded-2xl bg-background/70 backdrop-blur-sm border border-border flex items-center justify-center group-hover:scale-110 transition-transform">
-              <MapPin size={24} className="text-highlight/90" />
-            </div>
-            <div className="text-center">
-              <p className="text-sm font-medium">İstanbul, Türkiye</p>
-              <p className="text-[11px] text-neutral-500 font-mono uppercase tracking-widest mt-0.5">Bahçelievler</p>
-            </div>
+                  </motion.form>
+                )}
+              </AnimatePresence>
+            </motion.div>
           </div>
-        </motion.div>
+        </div>
       </div>
-    </div>
-  );
-}
-
-function Field({ label, name, type, placeholder }: { label: string; name: string; type: string; placeholder: string }) {
-  return (
-    <div>
-      <label className="block text-[10px] text-neutral-500 uppercase tracking-widest font-mono mb-2.5">
-        {label}
-      </label>
-      <input
-        required
-        name={name}
-        type={type}
-        placeholder={placeholder}
-        className="w-full bg-background border border-border rounded-xl px-4 py-3.5 text-sm outline-none focus:border-accent transition-colors"
-      />
     </div>
   );
 }

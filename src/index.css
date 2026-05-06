@@ -1,71 +1,153 @@
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+/* Pikare-inspired font stack — Syne (bold display) + Barlow (body) */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400&family=Barlow+Condensed:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Bricolage Grotesque", sans-serif;
-  --font-brand: "Plus Jakarta Sans", sans-serif;
-  --font-mono: "JetBrains Mono", monospace;
+  /* --- Fonts --- */
+  --font-sans:      "Barlow",           ui-sans-serif, system-ui, sans-serif;
+  --font-display:   "Syne",             sans-serif;
+  --font-condensed: "Barlow Condensed", sans-serif;
+  --font-mono:      "JetBrains Mono",   monospace;
 
-  --color-primary: #FAFAF9;
-  --color-secondary: #A1A1AA;
-  --color-accent: #C9A96E;
-  --color-highlight: #5865F2;
-  --color-background: #111113;
-  --color-surface: #18181B;
-  --color-border: #27272A;
+  /* --- Dark palette --- */
+  --color-primary:      #F2EFE9;
+  --color-secondary:    #8A8880;
+  --color-accent:       #C9A96E;
+  --color-highlight:    #E8C547;
+  --color-on-highlight: #0F0F0E;
+  --color-background:   #060607;
+  --color-surface:      #0D0D0E;
+  --color-border:       #1C1C1A;
+
+  /* --- Light palette --- */
+  --color-light:           #F5F3EF;
+  --color-light-alt:       #ECEAE4;
+  --color-light-text:      #0F0F0E;
+  --color-light-secondary: #6B6960;
+  --color-light-border:    #DEDAD2;
 }
 
+/* ─── Base ─────────────────────────────────────── */
 @layer base {
   body {
-    @apply bg-background text-primary font-sans antialiased overflow-x-hidden;
+    @apply bg-background text-primary antialiased overflow-x-hidden;
+    font-family: var(--font-sans);
+    font-weight: 400;
     scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Grain texture overlay — hallmark of premium sites */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.038;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display tracking-tight;
+    font-family: var(--font-display);
+    letter-spacing: -0.03em;
   }
 
   ::selection {
-    background-color: color-mix(in srgb, var(--color-accent) 25%, transparent);
-    color: var(--color-primary);
+    background: color-mix(in srgb, var(--color-highlight) 25%, transparent);
+    color: var(--color-on-highlight);
   }
 }
 
+/* ─── Utilities ─────────────────────────────────── */
 @layer utilities {
-  .animate-fade-in {
-    animation: fadeIn 0.5s ease both;
-  }
 
+  /* ── Keyframes ── */
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-4px); }
-    to { opacity: 1; transform: translateY(0); }
+    to   { opacity: 1; transform: translateY(0); }
   }
-
-  .animate-slide-up {
-    animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
-  }
-
   @keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .glass {
-    background: color-mix(in srgb, var(--color-background) 92%, transparent);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--color-border);
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
+  .animate-fade-in  { animation: fadeIn  0.5s ease both; }
+  .animate-slide-up { animation: slideUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+  /* ── Section labels ── */
   .section-label {
-    @apply inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-secondary;
+    display:        inline-flex;
+    align-items:    center;
+    gap:            0.5rem;
+    font-family:    var(--font-mono);
+    font-size:      11px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color:          var(--color-secondary);
   }
-}
+  .section-label::before {
+    content:    '';
+    display:    inline-block;
+    width:      1.75rem;
+    height:     1px;
+    background: var(--color-highlight);
+    opacity:    0.7;
+  }
 
-.section-label::before {
-  content: '';
-  display: inline-block;
-  width: 1.25rem;
-  height: 1px;
-  background-color: var(--color-highlight);
-  opacity: 0.6;
+  .section-label-light {
+    display:        inline-flex;
+    align-items:    center;
+    gap:            0.5rem;
+    font-family:    var(--font-mono);
+    font-size:      11px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color:          var(--color-light-secondary);
+  }
+  .section-label-light::before {
+    content:    '';
+    display:    inline-block;
+    width:      1.75rem;
+    height:     1px;
+    background: var(--color-highlight);
+    opacity:    0.7;
+  }
+
+  /* ── Section titles ── */
+  .section-title-dark {
+    font-family:    var(--font-display);
+    font-size:      clamp(1.9rem, 3.8vw, 3.2rem);
+    font-weight:    700;
+    line-height:    1.04;
+    letter-spacing: -0.035em;
+    color:          var(--color-primary);
+  }
+
+  .section-title-light {
+    font-family:    var(--font-display);
+    font-size:      clamp(1.9rem, 3.8vw, 3.2rem);
+    font-weight:    700;
+    line-height:    1.04;
+    letter-spacing: -0.035em;
+    color:          var(--color-light-text);
+  }
+
+  /* ── Hero headline ── */
+  .hero-display {
+    font-family:    var(--font-display);
+    font-size:      clamp(2.6rem, 6vw, 5.5rem);
+    font-weight:    700;
+    line-height:    0.96;
+    letter-spacing: -0.05em;
+  }
+
+  /* ── Stat numbers ── */
+  .stat-number {
+    font-family:    var(--font-condensed);
+    font-weight:    700;
+    letter-spacing: -0.02em;
+  }
 }

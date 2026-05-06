@@ -24,7 +24,7 @@ export const SERVICES = [
     description: 'İşletmenizi internete taşıyan, kolay yönetilebilir online satış siteleri.',
     icon: ShoppingBag,
     details: 'Ürünlerinizi sergileyebileceğiniz, güvenli ödeme altyapısına sahip kullanıcı dostu mağazalar.',
-    image: '/1.jpg'
+    image: '/e-tic.jpg'
   },
   {
     id: 'corporate',
@@ -32,7 +32,7 @@ export const SERVICES = [
     description: 'Şirketinizin vizyonunu yansıtan, modern ve mobil uyumlu web siteleri.',
     icon: Building2,
     details: 'İşletmenizi profesyonel bir şekilde tanıtan, hızlı ve güvenilir web sayfaları.',
-    image: '/2.jpg'
+    image: '/kurumsal1.jpg'
   },
   {
     id: 'personal',
@@ -40,7 +40,7 @@ export const SERVICES = [
     description: 'Projelerinizi ve özgeçmişinizi paylaşabileceğiniz şık kişisel sayfalar.',
     icon: User,
     details: 'Profesyonel imajınızı destekleyen, özgün ve sade tasarımlı portfolyo siteleri.',
-    image: '/3.jpg'
+    image: '/kisisel.jpg'
   },
 
   {
@@ -49,7 +49,7 @@ export const SERVICES = [
     description: 'Telefonlarda sorunsuz çalışan web ve mobil uygulama çözümleri.',
     icon: Smartphone,
     details: 'Kullanıcıların her yerden erişebileceği, hızlı ve pratik mobil deneyimler.',
-    image: '/6.jpg'
+    image: '/mobile.jpg'
   },
 
 
@@ -140,25 +140,13 @@ export const RESTAURANT_APP_FEATURES = [
   }
 ];
 
-export const PRODUCTS = [
-  
-  {
-    id: 'gym-master',
-    title: 'Gym-Master Pro',
-    category: 'Spor Salonu Yönetimi',
-    description: 'Üye takibi, paket yönetimi ve geçiş kontrol sistemi entegrasyonu.',
-    image: 'https://placehold.co/800x600/18181B/5865F2?text=Gym+Master+Pro',
-    features: ['Üye Devamsızlık Takibi', 'Otomatik Ödeme Hatırlatıcı', 'Eğitmen Panel Sistemi', 'Mobil Üye Kartı'],
-    url: '',
-    tag: 'Yeni'
-  },
-  {
-    id: 'stock-vision',
-    title: 'StockVision AI',
-    category: 'Envanter Takibi',
-    description: 'Yapay zeka destekli stok tahminleme ve depo yönetim yazılımı.',
-    image: 'https://placehold.co/800x600/18181B/C9A96E?text=StockVision+AI',
-    features: ['AI Stok Tahminleme', 'Barkod Okuma Desteği', 'Çoklu Depo Yönetimi', 'Kritik Seviye Uyarıları'],
-    url: ''
-  }
-];
+export const PRODUCTS: {
+  id: string;
+  title: string;
+  category: string;
+  description: string;
+  image: string;
+  features: string[];
+  url: string;
+  tag?: string;
+}[] = [];

@@ -4,35 +4,37 @@ import { db } from '../lib/firebase';
 import { collection, query, getDocs, orderBy } from 'firebase/firestore';
 import { PROJECTS as STATIC_PROJECTS, SERVICES } from '../constants';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, ExternalLink, Maximize2, X } from 'lucide-react';
+import { ArrowLeft, ExternalLink, X, Maximize2 } from 'lucide-react';
 
 export default function ProjectsPage() {
+  useEffect(() => { document.title = 'Projeler — Butiq Studio'; }, []);
+
   const [dynamicProjects, setDynamicProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    const fetchProjects = async () => {
+      try {
+        const q = query(collection(db, 'projects'), orderBy('createdAt', 'desc'));
+        const snapshot = await getDocs(q);
+        setDynamicProjects(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+      } catch {
+        // fallback
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchProjects();
   }, []);
-
-  const fetchProjects = async () => {
-    try {
-      const q = query(collection(db, 'projects'), orderBy('createdAt', 'desc'));
-      const snapshot = await getDocs(q);
-      const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setDynamicProjects(data);
-    } catch (error) {
-      console.error("Projeler yüklenirken hata oluştu:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const allProjects = [...dynamicProjects, ...STATIC_PROJECTS];
 
   return (
-    <div className="min-h-screen bg-background pt-32 pb-20 px-6">
+    <div className="min-h-screen bg-background">
+
+      {/* Lightbox */}
       <AnimatePresence>
         {selectedImage && (
           <motion.div
@@ -40,24 +42,25 @@ export default function ProjectsPage() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedImage(null)}
-            className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 md:p-12 cursor-zoom-out"
+            className="fixed inset-0 z-[100] bg-black/96 flex items-center justify-center p-6 cursor-zoom-out"
           >
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
+              initial={{ scale: 0.92, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="relative max-w-6xl w-full max-h-full flex items-center justify-center"
+              exit={{ scale: 0.92, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="relative max-w-5xl w-full"
             >
               <button
                 onClick={() => setSelectedImage(null)}
-                className="absolute -top-12 right-0 text-white hover:text-highlight/90 transition-colors p-2"
+                className="absolute -top-12 right-0 text-white/60 hover:text-white transition-colors"
               >
-                <X size={32} />
+                <X size={28} />
               </button>
               <img
                 src={selectedImage}
-                className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl"
-                alt="Proje tam ekran"
+                className="w-full max-h-[85vh] object-contain"
+                alt="Proje görüntüsü"
                 referrerPolicy="no-referrer"
               />
             </motion.div>
@@ -65,111 +68,160 @@ export default function ProjectsPage() {
         )}
       </AnimatePresence>
 
-      <div className="max-w-7xl mx-auto">
-        <Link
-          to="/"
-          className="inline-flex items-center gap-2 text-sm text-neutral-500 hover:text-white transition-colors mb-12 group"
-        >
-          <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-          Ana Sayfaya Dön
-        </Link>
-
-        <div className="max-w-3xl mb-20">
+      {/* Page header - dark */}
+      <div className="bg-background border-b border-border pt-28 pb-16 px-6">
+        <div className="max-w-7xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
           >
-            <span className="text-xs font-mono text-highlight/90 uppercase tracking-widest mb-4 block">BAZI ÇALIŞMALARIMIZ</span>
-            <h1 className="text-5xl md:text-7xl font-display font-medium mb-8">
-              Şimdiye kadar <br /> <span className="text-neutral-500 italic">neler yaptık?</span>
-            </h1>
-            <p className="text-xl text-neutral-400 font-light leading-relaxed">
-              Basit web sitelerinden karmaşık yönetim panellerine kadar, her bütçeye ve ihtiyaca uygun geliştirdiğimiz projelerin bir özeti.
-            </p>
+            <Link
+              to="/"
+              className="inline-flex items-center gap-2 text-[12px] font-mono text-secondary hover:text-primary transition-colors mb-8 group"
+            >
+              <ArrowLeft size={13} className="group-hover:-translate-x-0.5 transition-transform" />
+              Ana Sayfa
+            </Link>
           </motion.div>
+
+          <div className="section-label mb-6">Portfolyo</div>
+
+          <div className="overflow-hidden">
+            <motion.h1
+              initial={{ y: '110%' }}
+              animate={{ y: 0 }}
+              transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+              className="font-bold text-primary leading-[1.0]"
+              style={{ fontSize: 'clamp(2.5rem, 7vw, 6rem)', letterSpacing: '-0.04em' }}
+            >
+              Neler yaptık?
+            </motion.h1>
+          </div>
+          
         </div>
+      </div>
 
-        {loading ? (
-          <div className="py-20 text-center text-neutral-500 italic">Yükleniyor...</div>
-        ) : allProjects.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            {allProjects.map((project, i) => (
-              <motion.div
-                key={project.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
-                className="group"
-              >
-                <div
-                  className="aspect-video w-full rounded-3xl overflow-hidden bg-surface border border-neutral-800 mb-6 relative"
+      {/* Projects grid - light bg */}
+      <div style={{ backgroundColor: 'var(--color-light)' }}>
+        <div className="max-w-7xl mx-auto px-6 py-20">
+
+          {loading ? (
+            <div className="py-20 text-center" style={{ color: 'var(--color-light-secondary)' }}>
+              <p className="font-mono text-[12px] uppercase tracking-[0.2em]">Yükleniyor...</p>
+            </div>
+          ) : allProjects.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {allProjects.map((project, i) => (
+                <motion.div
+                  key={project.id || i}
+                  initial={{ opacity: 0, y: 28 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-60px' }}
+                  transition={{ delay: i * 0.06, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  className="group"
                 >
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 cursor-zoom-in"
-                    referrerPolicy="no-referrer"
-                    onClick={() => setSelectedImage(project.image)}
-                  />
-
-                  <div className="absolute top-4 right-4 z-10 flex gap-2">
-                    <button
+                  {/* Image */}
+                  <div
+                    className="relative aspect-video overflow-hidden mb-5 border"
+                    style={{ borderColor: 'var(--color-light-border)', borderRadius: '2px', background: 'var(--color-light-alt)' }}
+                  >
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-700 ease-out cursor-zoom-in"
+                      referrerPolicy="no-referrer"
                       onClick={() => setSelectedImage(project.image)}
-                      className="w-10 h-10 bg-black/40 backdrop-blur-md text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-accent"
-                    >
-                      <Maximize2 size={18} />
-                    </button>
+                    />
+
+                    {/* Action buttons */}
+                    <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                      <button
+                        onClick={() => setSelectedImage(project.image)}
+                        className="w-9 h-9 bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors"
+                        style={{ borderRadius: '2px' }}
+                      >
+                        <Maximize2 size={14} style={{ color: 'var(--color-light-text)' }} />
+                      </button>
+                      {project.url && (
+                        <a
+                          href={project.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="w-9 h-9 bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors"
+                          style={{ borderRadius: '2px' }}
+                          onClick={e => e.stopPropagation()}
+                        >
+                          <ExternalLink size={14} style={{ color: 'var(--color-light-text)' }} />
+                        </a>
+                      )}
+                    </div>
+
+                    {/* Service badge */}
+                    <div className="absolute bottom-3 left-3">
+                      <span
+                        className="font-mono text-[9px] uppercase tracking-[0.15em] px-2.5 py-1 backdrop-blur-sm"
+                        style={{
+                          background: 'rgba(245,243,239,0.85)',
+                          color: 'var(--color-light-text)',
+                          borderRadius: '2px',
+                        }}
+                      >
+                        {SERVICES.find(s => s.id === project.serviceId)?.title || 'Genel Proje'}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Meta */}
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <h3
+                        className="text-[18px] font-bold mb-1.5 group-hover:opacity-70 transition-opacity"
+                        style={{ color: 'var(--color-light-text)' }}
+                      >
+                        {project.title}
+                      </h3>
+                      <p
+                        className="text-[13px] leading-relaxed"
+                        style={{ color: 'var(--color-light-secondary)' }}
+                      >
+                        {project.description}
+                      </p>
+                    </div>
                     {project.url && (
                       <a
                         href={project.url}
                         target="_blank"
                         rel="noreferrer"
-                        className="w-10 h-10 bg-white text-black rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-accent hover:text-white"
+                        className="shrink-0 text-[11px] font-mono uppercase tracking-[0.15em] hover:opacity-60 transition-opacity mt-1"
+                        style={{ color: 'var(--color-highlight)' }}
                       >
-                        <ExternalLink size={18} />
+                        İncele →
                       </a>
                     )}
                   </div>
 
-                  <div className="absolute bottom-4 left-4 z-10">
-                    <span className="px-3 py-1 bg-black/60 backdrop-blur-md border border-white/10 rounded-full text-[9px] font-mono text-white uppercase tracking-widest">
-                      {SERVICES.find(s => s.id === project.serviceId)?.title || 'Genel Proje'}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-2xl font-display font-medium">{project.title}</h3>
-                  {project.url && (
-                    <a
-                      href={project.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-highlight/100 text-xs font-mono uppercase tracking-widest flex items-center gap-1 hover:underline mt-2"
-                    >
-                      İncele <ExternalLink size={12} />
-                    </a>
-                  )}
-                </div>
-
-                <p className="text-neutral-500 mb-6 font-light">{project.description}</p>
-
-                <div className="flex flex-wrap gap-2">
-                  {project.tags?.map((tag: string) => (
-                    <span key={tag} className="px-3 py-1 bg-surface border border-neutral-800 rounded-full text-[10px] font-mono text-neutral-400 uppercase tracking-widest">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        ) : (
-          <div className="py-20 text-center border border-dashed border-neutral-800 rounded-[2.5rem]">
-            <p className="text-neutral-500 italic">Henüz yüklü bir proje bulunamadı.</p>
-          </div>
-        )}
+                </motion.div>
+              ))}
+            </div>
+          ) : (
+            <div
+              className="py-24 text-center border"
+              style={{ borderColor: 'var(--color-light-border)', borderRadius: '2px' }}
+            >
+              <p className="text-[14px] mb-4" style={{ color: 'var(--color-light-secondary)' }}>
+                Henüz proje eklenmemiş.
+              </p>
+              <Link
+                to="/iletisim"
+                className="text-[13px] font-semibold hover:opacity-60 transition-opacity"
+                style={{ color: 'var(--color-highlight)' }}
+              >
+                İlk projenizi başlatın →
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

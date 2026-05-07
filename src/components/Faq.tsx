@@ -47,12 +47,12 @@ export default function Faq() {
             transition={{ duration: 0.6, delay: 0.25 }}
             className="flex flex-col gap-3 md:items-end shrink-0"
           >
-            <p className="text-[16px] sm:text-[14px] leading-relaxed max-w-xs md:text-right" style={{ color: 'var(--color-light-secondary)' }}>
+            <p className="text-[18px] sm:text-[14px] leading-relaxed max-w-xs md:text-right" style={{ color: 'var(--color-light-secondary)' }}>
               Başlamadan önce aklınıza takılan sorulara yanıt bulun.
             </p>
             <Link
               to="/iletisim"
-              className="text-[15px] sm:text-[12px] font-semibold hover:opacity-60 transition-opacity"
+              className="text-[17px] sm:text-[12px] font-semibold hover:opacity-60 transition-opacity"
               style={{ color: 'var(--color-light-text)' }}
             >
               Başka sorunuz mu var? Yazın →
@@ -125,7 +125,7 @@ export default function Faq() {
                       className="overflow-hidden"
                     >
                       <div
-                        className="pl-10 pr-12 py-5 text-[16px] sm:text-[14px] leading-[1.85]"
+                        className="pl-10 pr-12 py-5 text-[18px] sm:text-[14px] leading-[1.85]"
                         style={{ color: 'var(--color-light-secondary)' }}
                       >
                         {faq.answer}
@@ -160,12 +160,12 @@ export default function Faq() {
               >
                 Cevabını bulamadınız mı?
               </h3>
-              <p className="text-[15px] sm:text-[13px] leading-relaxed mb-7" style={{ color: 'var(--color-light-secondary)' }}>
+              <p className="text-[17px] sm:text-[13px] leading-relaxed mb-7" style={{ color: 'var(--color-light-secondary)' }}>
                 Projeniz hakkında konuşmak veya teklife ihtiyaç duymak için bize yazın.
               </p>
               <Link
                 to="/iletisim"
-                className="inline-flex items-center justify-center w-full h-10 text-[15px] sm:text-[12px] font-semibold hover:opacity-85 transition-opacity"
+                className="inline-flex items-center justify-center w-full h-10 text-[17px] sm:text-[12px] font-semibold hover:opacity-85 transition-opacity"
                 style={{ backgroundColor: 'var(--color-highlight)', color: 'var(--color-on-highlight)', borderRadius: '2px' }}
               >
                 İletişime Geç
@@ -179,8 +179,8 @@ export default function Faq() {
                 { label: 'Destek',        value: 'Yayın sonrası dahil' },
               ].map(item => (
                 <div key={item.label} className="flex items-center justify-between py-3.5 border-b" style={{ borderColor: 'var(--color-light-border)' }}>
-                  <span className="text-[14px] sm:text-[12px]" style={{ color: 'var(--color-light-secondary)' }}>{item.label}</span>
-                  <span className="text-[14px] sm:text-[12px] font-semibold" style={{ color: 'var(--color-light-text)' }}>{item.value}</span>
+                  <span className="text-[17px] sm:text-[12px]" style={{ color: 'var(--color-light-secondary)' }}>{item.label}</span>
+                  <span className="text-[17px] sm:text-[12px] font-semibold" style={{ color: 'var(--color-light-text)' }}>{item.value}</span>
                 </div>
               ))}
             </div>

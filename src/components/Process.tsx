@@ -153,7 +153,7 @@ export default function Process() {
               Fikirlerinizi çalışan<br />ürünlere dönüştürüyoruz
             </h2>
           </div>
-          <p className="text-[15px] sm:text-[13px] text-secondary leading-relaxed max-w-xs">
+          <p className="text-[17px] sm:text-[13px] text-secondary leading-relaxed max-w-xs">
             Baştan sona şeffaf ve öngörülebilir bir iş süreciyle projenizi
             zamanında ve beklentilerin ötesinde teslim ediyoruz.
           </p>
@@ -186,13 +186,13 @@ export default function Process() {
             <p className="text-primary font-semibold text-[16px] mb-1">
               Projenizi hayata geçirelim
             </p>
-            <p className="text-secondary text-[15px] sm:text-[13px]">
+            <p className="text-secondary text-[17px] sm:text-[13px]">
               Ücretsiz ön görüşme için bugün ulaşın.
             </p>
           </div>
           <Link
             to="/iletisim"
-            className="shrink-0 h-10 px-7 text-[15px] sm:text-[13px] font-medium inline-flex items-center transition-opacity duration-200 hover:opacity-85"
+            className="shrink-0 h-10 px-7 text-[17px] sm:text-[13px] font-medium inline-flex items-center transition-opacity duration-200 hover:opacity-85"
             style={{ background: 'var(--color-highlight)', color: 'var(--color-on-highlight)', borderRadius: '2px' }}
           >
             Ücretsiz Görüşme →

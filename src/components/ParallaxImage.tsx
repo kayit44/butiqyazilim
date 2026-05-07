@@ -33,7 +33,7 @@ export default function ParallaxImage({
     <div
       ref={ref}
       className="relative w-full overflow-hidden"
-      style={{ height: `clamp(220px, 56.25vw, ${height})` }}
+      style={{ height: `clamp(320px, 65vw, ${height})` }}
     >
       {/* Parallax image layer */}
       <motion.div
@@ -77,14 +77,14 @@ export default function ParallaxImage({
           className="font-bold text-white leading-[1.0] mb-6"
           style={{
             fontFamily: 'var(--font-display)',
-            fontSize: 'clamp(2.2rem, 5vw, 4.5rem)',
+            fontSize: 'clamp(1.45rem, 5vw, 4.5rem)',
             letterSpacing: '-0.04em',
           }}
         >
           {title}
         </h2>
         {subtitle && (
-          <p className="text-[14px] mb-8 max-w-md" style={{ color: 'rgba(242,239,233,0.6)' }}>
+          <p className="text-[17px] sm:text-[14px] mb-8 max-w-md" style={{ color: 'rgba(242,239,233,0.6)' }}>
             {subtitle}
           </p>
         )}

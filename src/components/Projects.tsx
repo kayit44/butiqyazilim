@@ -68,7 +68,7 @@ export default function Projects() {
           </div>
           <Link
             to="/projeler"
-            className="group flex items-center gap-2 text-[13px] font-medium text-secondary hover:text-primary transition-colors"
+            className="group flex items-center gap-2 text-[16px] sm:text-[13px] font-medium text-secondary hover:text-primary transition-colors"
           >
             Tüm Projeleri Gör
             <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
@@ -122,10 +122,10 @@ export default function Projects() {
                       >
                         {featuredProjects[0].title}
                       </h3>
-                      <p className="text-[13px] text-white/50 max-w-md line-clamp-2 leading-relaxed mb-4">
+                      <p className="text-[16px] sm:text-[13px] text-white/50 max-w-md line-clamp-2 leading-relaxed mb-4">
                         {featuredProjects[0].description}
                       </p>
-                      <div className="flex items-center gap-2 text-[12px] font-semibold text-white/70 group-hover:text-white transition-colors duration-200">
+                      <div className="flex items-center gap-2 text-[15px] sm:text-[12px] font-semibold text-white/70 group-hover:text-white transition-colors duration-200">
                         İncele <ArrowUpRight size={13} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
                       </div>
                     </div>
@@ -172,10 +172,10 @@ export default function Projects() {
                       >
                         {featuredProjects[1].title}
                       </h3>
-                      <p className="text-[12px] text-white/45 line-clamp-2 leading-relaxed mb-3">
+                      <p className="text-[15px] sm:text-[12px] text-white/45 line-clamp-2 leading-relaxed mb-3">
                         {featuredProjects[1].description}
                       </p>
-                      <div className="flex items-center gap-2 text-[11px] font-semibold text-white/60 group-hover:text-white transition-colors duration-200">
+                      <div className="flex items-center gap-2 text-[15px] sm:text-[11px] font-semibold text-white/60 group-hover:text-white transition-colors duration-200">
                         İncele <ArrowUpRight size={12} />
                       </div>
                     </div>
@@ -222,10 +222,10 @@ export default function Projects() {
                       </div>
                       <div className="p-5 flex items-start justify-between gap-3">
                         <div>
-                          <h3 className="text-[13px] font-semibold text-primary mb-1">
+                          <h3 className="text-[16px] sm:text-[13px] font-semibold text-primary mb-1">
                             {project.title}
                           </h3>
-                          <p className="text-[11px] text-secondary line-clamp-2 leading-relaxed">
+                          <p className="text-[15px] sm:text-[11px] text-secondary line-clamp-2 leading-relaxed">
                             {project.description}
                           </p>
                         </div>
@@ -279,8 +279,8 @@ export default function Projects() {
             className="border border-border py-20 text-center"
             style={{ borderRadius: '2px' }}
           >
-            <p className="text-[13px] text-secondary mb-4">Henüz proje eklenmemiş.</p>
-            <Link to="/iletisim" className="text-[12px] text-highlight hover:underline">
+            <p className="text-[17px] sm:text-[13px] text-secondary mb-4">Henüz proje eklenmemiş.</p>
+            <Link to="/iletisim" className="text-[16px] sm:text-[12px] text-highlight hover:underline">
               İlk projenizi başlatmak için iletişime geçin →
             </Link>
           </motion.div>

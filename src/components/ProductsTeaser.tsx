@@ -81,7 +81,7 @@ export default function ProductsTeaser() {
           >
             <Link
               to="/urunler"
-              className="group flex items-center gap-2 text-[15px] sm:text-[13px] font-medium hover:opacity-60 transition-opacity"
+              className="group flex items-center gap-2 text-[17px] sm:text-[13px] font-medium hover:opacity-60 transition-opacity"
               style={{ color: 'var(--color-light-text)' }}
             >
               Tüm Ürünleri Gör
@@ -96,12 +96,12 @@ export default function ProductsTeaser() {
             className="py-20 text-center border"
             style={{ borderColor: 'var(--color-light-border)', borderRadius: '2px', background: 'var(--color-light-alt)' }}
           >
-            <p className="text-[15px] sm:text-[13px] mb-4" style={{ color: 'var(--color-light-secondary)' }}>
+            <p className="text-[17px] sm:text-[13px] mb-4" style={{ color: 'var(--color-light-secondary)' }}>
               Hazır ürünlerimiz yakında burada olacak.
             </p>
             <Link
               to="/iletisim"
-              className="text-[15px] sm:text-[12px] font-semibold hover:opacity-60 transition-opacity"
+              className="text-[17px] sm:text-[12px] font-semibold hover:opacity-60 transition-opacity"
               style={{ color: 'var(--color-light-text)' }}
             >
               Özel çözüm için iletişime geçin →
@@ -165,7 +165,7 @@ export default function ProductsTeaser() {
                   {product.title}
                 </h3>
                 <p
-                  className="text-[15px] sm:text-[13px] leading-relaxed mb-6 flex-1"
+                  className="text-[17px] sm:text-[13px] leading-relaxed mb-6 flex-1"
                   style={{ color: 'var(--color-light-secondary)' }}
                 >
                   {product.description}
@@ -200,7 +200,7 @@ export default function ProductsTeaser() {
                       href={product.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[15px] sm:text-[12px] font-semibold hover:opacity-60 transition-opacity"
+                      className="text-[17px] sm:text-[12px] font-semibold hover:opacity-60 transition-opacity"
                       style={{ color: 'var(--color-light-text)' }}
                     >
                       Ürünü İncele →
@@ -208,7 +208,7 @@ export default function ProductsTeaser() {
                   ) : (
                     <Link
                       to="/urunler"
-                      className="text-[15px] sm:text-[12px] font-semibold hover:opacity-60 transition-opacity"
+                      className="text-[17px] sm:text-[12px] font-semibold hover:opacity-60 transition-opacity"
                       style={{ color: 'var(--color-light-text)' }}
                     >
                       Detayları Gör →

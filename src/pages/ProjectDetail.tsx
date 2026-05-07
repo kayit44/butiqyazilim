@@ -67,6 +67,10 @@ function MobileProjectCard({ project, onLightbox }: { project: Project; onLightb
   const prev = () => setIdx(i => (i - 1 + allImages.length) % allImages.length);
   const next = () => setIdx(i => (i + 1) % allImages.length);
 
+  useEffect(() => {
+    allImages.forEach(src => { const img = new Image(); img.src = src; });
+  }, []);
+
   return (
     <div>
       <PhoneMockup

@@ -52,6 +52,9 @@ export default function PhoneFrame({ src, alt = '', width = 140 }: PhoneFramePro
           src={src}
           alt={alt}
           referrerPolicy="no-referrer"
+          loading="eager"
+          decoding="async"
+          fetchPriority="high"
           style={{
             position: 'absolute',
             inset: 0,

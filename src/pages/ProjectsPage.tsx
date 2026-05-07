@@ -124,8 +124,9 @@ export default function ProjectsPage() {
                 >
                   {/* Image */}
                   {project.serviceId === 'mobile-dev' ? (
-                    <div
-                      className="relative mb-5 border flex items-center justify-center"
+                    <Link
+                      to="/hizmet/mobile-dev"
+                      className="relative mb-5 border flex items-center justify-center block"
                       style={{
                         borderColor: 'var(--color-light-border)',
                         borderRadius: '2px',
@@ -145,7 +146,7 @@ export default function ProjectsPage() {
                           {SERVICES.find(s => s.id === project.serviceId)?.title || 'Genel Proje'}
                         </span>
                       </div>
-                    </div>
+                    </Link>
                   ) : (
                     <div
                       className="relative aspect-video overflow-hidden mb-5 border"
@@ -210,7 +211,15 @@ export default function ProjectsPage() {
                         {project.description}
                       </p>
                     </div>
-                    {project.url && (
+                    {project.serviceId === 'mobile-dev' ? (
+                      <Link
+                        to="/hizmet/mobile-dev"
+                        className="shrink-0 text-[11px] font-mono uppercase tracking-[0.15em] hover:opacity-60 transition-opacity mt-1"
+                        style={{ color: 'var(--color-highlight)' }}
+                      >
+                        İncele →
+                      </Link>
+                    ) : project.url ? (
                       <a
                         href={project.url}
                         target="_blank"
@@ -220,7 +229,7 @@ export default function ProjectsPage() {
                       >
                         İncele →
                       </a>
-                    )}
+                    ) : null}
                   </div>
 
                 </motion.div>

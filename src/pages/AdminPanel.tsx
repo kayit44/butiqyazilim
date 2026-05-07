@@ -157,7 +157,7 @@ export default function AdminPanel() {
           category: 'SaaS Çözümü', // Auto-set for all products
           image: newItem.image,
           images: newItem.images,
-          features: newItem.features.split(',').map(f => f.trim()),
+          features: newItem.features ? newItem.features.split(',').map(f => f.trim()).filter(Boolean) : [],
           url: newItem.url,
           updatedAt: serverTimestamp()
         };
@@ -196,6 +196,7 @@ export default function AdminPanel() {
     });
     setEditingId(item.id);
     setIsAdding(true);
+    setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 50);
   };
 
   const handleDelete = async (collectionName: string, id: string) => {
@@ -471,7 +472,7 @@ export default function AdminPanel() {
                 <div className="md:col-span-2">
                   <button
                     type="submit"
-                    disabled={uploading || !newItem.image}
+                    disabled={uploading || (!editingId && !newItem.image)}
                     className="w-full py-4 bg-highlight text-white font-bold rounded-xl hover:bg-highlight/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {editingId ? 'Güncelle' : (activeTab === 'projects' ? 'Projeyi Yayınla' : 'Ürünü Yayınla')}

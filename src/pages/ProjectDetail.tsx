@@ -231,13 +231,19 @@ export default function ProjectDetail() {
               >
                 <X size={28} />
               </button>
-              <img
-                src={selectedImage}
-                className="w-full max-h-[85vh] object-contain"
-                alt="Proje görüntüsü"
-                referrerPolicy="no-referrer"
-                style={{ borderRadius: isMobileApp ? '1.5rem' : '2px' }}
-              />
+              {isMobileApp ? (
+                <div className="flex justify-center">
+                  <PhoneFrame src={selectedImage} alt="Proje görüntüsü" width={320} lazy={false} />
+                </div>
+              ) : (
+                <img
+                  src={selectedImage}
+                  className="w-full max-h-[85vh] object-contain"
+                  alt="Proje görüntüsü"
+                  referrerPolicy="no-referrer"
+                  style={{ borderRadius: '2px' }}
+                />
+              )}
             </motion.div>
           </motion.div>
         )}

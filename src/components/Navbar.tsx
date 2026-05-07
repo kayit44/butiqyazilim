@@ -36,17 +36,29 @@ export default function Navbar() {
     return () => observers.forEach(o => o?.disconnect());
   }, [location.pathname]);
 
+  const [pendingScroll, setPendingScroll] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!pendingScroll || location.pathname !== '/') return;
+    const tryScroll = () => {
+      const element = document.querySelector(pendingScroll);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+        setPendingScroll(null);
+      }
+    };
+    tryScroll();
+    const t = setTimeout(tryScroll, 400);
+    return () => clearTimeout(t);
+  }, [location.pathname, pendingScroll]);
+
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (href.startsWith('#')) {
+      e.preventDefault();
       if (location.pathname !== '/') {
-        e.preventDefault();
+        setPendingScroll(href);
         navigate('/');
-        setTimeout(() => {
-          const element = document.querySelector(href);
-          if (element) element.scrollIntoView({ behavior: 'smooth' });
-        }, 300);
       } else {
-        e.preventDefault();
         const element = document.querySelector(href);
         if (element) element.scrollIntoView({ behavior: 'smooth' });
       }

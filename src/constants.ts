@@ -45,10 +45,10 @@ export const SERVICES = [
 
   {
     id: 'mobile-dev',
-    title: 'Mobil Uyumlu Uygulamalar',
-    description: 'Telefonlarda sorunsuz çalışan web ve mobil uygulama çözümleri.',
+    title: 'Mobil Çözümler',
+    description: 'Telefon öncelikli düşünülerek geliştirilen, hızlı ve kullanışlı dijital çözümler.',
     icon: Smartphone,
-    details: 'Kullanıcıların her yerden erişebileceği, hızlı ve pratik mobil deneyimler.',
+    details: 'Her cihazda sorunsuz çalışan, kullanıcı dostu mobil deneyimler tasarlıyoruz.',
     image: '/mobile.jpg'
   },
 

@@ -6,6 +6,7 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import { ArrowLeft, ExternalLink, X, Maximize2, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import PhoneFrame from '../components/PhoneFrame';
+import { useSEO } from '../hooks/useSEO';
 
 interface Project {
   id?: string;
@@ -154,6 +155,16 @@ export default function ProjectDetail() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const isMobileApp = serviceId === 'mobile-dev';
+  const service = SERVICES.find(s => s.id === serviceId);
+
+  useSEO({
+    title: service ? service.title : 'Hizmet Detayı',
+    description: service
+      ? `${service.details} Butiq Yazılım ile profesyonel ${service.title.toLowerCase()} hizmetleri. İstanbul merkezli, hızlı teslimat.`
+      : 'Butiq Yazılım web tasarım ve yazılım geliştirme hizmet detayları.',
+    path: `/hizmet/${serviceId}`,
+    image: service?.image ? `https://butiqyazilim.com.tr${service.image}` : undefined,
+  });
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -174,10 +185,8 @@ export default function ProjectDetail() {
     fetchProjects();
   }, [serviceId]);
 
-  const service = SERVICES.find(s => s.id === serviceId);
-
   useEffect(() => {
-    if (service) document.title = `${service.title} — Butiq Studio`;
+    if (service) document.title = `${service.title} — Butiq Yazılım`;
   }, [service]);
 
   const allProjects: Project[] = [
@@ -307,107 +316,107 @@ export default function ProjectDetail() {
               </div>
             ) : (
 
-            /* ── Diğer hizmetler — standart grid ── */
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {allProjects.map((project, i) => (
-                <motion.div
-                  key={project.id || i}
-                  initial={{ opacity: 0, y: 28 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-60px' }}
-                  transition={{ delay: i * 0.08, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                  className="group"
-                >
-                  {/* Main image */}
-                  <div
-                    className="relative aspect-video overflow-hidden mb-5 border"
-                    style={{ borderColor: 'var(--color-light-border)', borderRadius: '2px', background: 'var(--color-light-alt)' }}
+              /* ── Diğer hizmetler — standart grid ── */
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {allProjects.map((project, i) => (
+                  <motion.div
+                    key={project.id || i}
+                    initial={{ opacity: 0, y: 28 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-60px' }}
+                    transition={{ delay: i * 0.08, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                    className="group"
                   >
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-700 cursor-zoom-in"
-                      referrerPolicy="no-referrer"
-                      onClick={() => setSelectedImage(project.image)}
-                    />
-                    <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                      <button
+                    {/* Main image */}
+                    <div
+                      className="relative aspect-video overflow-hidden mb-5 border"
+                      style={{ borderColor: 'var(--color-light-border)', borderRadius: '2px', background: 'var(--color-light-alt)' }}
+                    >
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-700 cursor-zoom-in"
+                        referrerPolicy="no-referrer"
                         onClick={() => setSelectedImage(project.image)}
-                        className="w-9 h-9 bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors"
-                        style={{ borderRadius: '2px' }}
-                      >
-                        <Maximize2 size={14} style={{ color: 'var(--color-light-text)' }} />
-                      </button>
+                      />
+                      <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        <button
+                          onClick={() => setSelectedImage(project.image)}
+                          className="w-9 h-9 bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors"
+                          style={{ borderRadius: '2px' }}
+                        >
+                          <Maximize2 size={14} style={{ color: 'var(--color-light-text)' }} />
+                        </button>
+                        {project.url && (
+                          <a
+                            href={project.url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="w-9 h-9 bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors"
+                            style={{ borderRadius: '2px' }}
+                            onClick={e => e.stopPropagation()}
+                          >
+                            <ExternalLink size={14} style={{ color: 'var(--color-light-text)' }} />
+                          </a>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Extra images */}
+                    {project.images && project.images.length > 0 && (
+                      <div className="grid grid-cols-4 gap-2 mb-5">
+                        {project.images.map((img: string, idx: number) => (
+                          <div
+                            key={idx}
+                            className="aspect-video overflow-hidden border cursor-zoom-in"
+                            style={{ borderColor: 'var(--color-light-border)', borderRadius: '2px' }}
+                            onClick={() => setSelectedImage(img)}
+                          >
+                            <img src={img} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" referrerPolicy="no-referrer" alt="" />
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Meta */}
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <h3 className="text-[18px] font-bold mb-1.5" style={{ color: 'var(--color-light-text)' }}>
+                          {project.title}
+                        </h3>
+                        <p className="text-[13px] leading-relaxed" style={{ color: 'var(--color-light-secondary)' }}>
+                          {project.description}
+                        </p>
+                      </div>
                       {project.url && (
                         <a
                           href={project.url}
                           target="_blank"
                           rel="noreferrer"
-                          className="w-9 h-9 bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors"
-                          style={{ borderRadius: '2px' }}
-                          onClick={e => e.stopPropagation()}
+                          className="shrink-0 text-[11px] font-mono uppercase tracking-[0.15em] hover:opacity-60 transition-opacity mt-1"
+                          style={{ color: 'var(--color-highlight)' }}
                         >
-                          <ExternalLink size={14} style={{ color: 'var(--color-light-text)' }} />
+                          Canlı Site →
                         </a>
                       )}
                     </div>
-                  </div>
 
-                  {/* Extra images */}
-                  {project.images && project.images.length > 0 && (
-                    <div className="grid grid-cols-4 gap-2 mb-5">
-                      {project.images.map((img: string, idx: number) => (
-                        <div
-                          key={idx}
-                          className="aspect-video overflow-hidden border cursor-zoom-in"
-                          style={{ borderColor: 'var(--color-light-border)', borderRadius: '2px' }}
-                          onClick={() => setSelectedImage(img)}
-                        >
-                          <img src={img} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" referrerPolicy="no-referrer" alt="" />
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* Meta */}
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <h3 className="text-[18px] font-bold mb-1.5" style={{ color: 'var(--color-light-text)' }}>
-                        {project.title}
-                      </h3>
-                      <p className="text-[13px] leading-relaxed" style={{ color: 'var(--color-light-secondary)' }}>
-                        {project.description}
-                      </p>
-                    </div>
-                    {project.url && (
-                      <a
-                        href={project.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="shrink-0 text-[11px] font-mono uppercase tracking-[0.15em] hover:opacity-60 transition-opacity mt-1"
-                        style={{ color: 'var(--color-highlight)' }}
-                      >
-                        Canlı Site →
-                      </a>
+                    {project.tags?.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mt-3">
+                        {project.tags.map((tag: string) => (
+                          <span
+                            key={tag}
+                            className="font-mono text-[9px] uppercase tracking-[0.15em] px-2.5 py-1"
+                            style={{ background: 'var(--color-light-alt)', color: 'var(--color-light-secondary)', borderRadius: '2px' }}
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
                     )}
-                  </div>
-
-                  {project.tags?.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mt-3">
-                      {project.tags.map((tag: string) => (
-                        <span
-                          key={tag}
-                          className="font-mono text-[9px] uppercase tracking-[0.15em] px-2.5 py-1"
-                          style={{ background: 'var(--color-light-alt)', color: 'var(--color-light-secondary)', borderRadius: '2px' }}
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </motion.div>
-              ))}
-            </div>
+                  </motion.div>
+                ))}
+              </div>
             )
           ) : (
             <div

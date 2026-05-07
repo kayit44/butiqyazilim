@@ -1,18 +1,22 @@
-import { useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
+import { useSEO } from '../hooks/useSEO';
 
 const sections = [
-  { title: '1. Hizmet Kapsamı', text: 'Butiq Studio, web tasarım, yazılım geliştirme ve dijital danışmanlık hizmetleri sunmaktadır. Hizmet detayları her proje için ayrı sözleşmelerle belirlenir.' },
+  { title: '1. Hizmet Kapsamı', text: 'Butiq Yazılım, web tasarım, yazılım geliştirme ve dijital danışmanlık hizmetleri sunmaktadır. Hizmet detayları her proje için ayrı sözleşmelerle belirlenir.' },
   { title: '2. Fikri Mülkiyet', text: 'Proje tesliminden sonra telif hakları müşteriye devredilir. Geliştirme sürecinde kullanılan açık kaynak bileşenler kendi lisans koşullarına tabidir.' },
   { title: '3. Ödeme Koşulları', text: 'Ödeme planı proje başlangıcında belirlenir. Genel olarak %50 peşin, %50 teslimat şeklinde uygulanır. Gecikmeli ödemeler için faiz uygulanabilir.' },
   { title: '4. Revizyon Hakkı', text: 'Her proje belirli sayıda ücretsiz revizyon hakkı içerir. Bu limitin aşılması durumunda ek ücretlendirme yapılır.' },
-  { title: '5. Sorumluluk Sınırı', text: 'Butiq Studio, üçüncü taraf servislerden kaynaklanan kesintilerden sorumlu tutulamaz. Azami sorumluluk, ilgili proje için ödenen tutarla sınırlıdır.' },
+  { title: '5. Sorumluluk Sınırı', text: 'Butiq Yazılım, üçüncü taraf servislerden kaynaklanan kesintilerden sorumlu tutulamaz. Azami sorumluluk, ilgili proje için ödenen tutarla sınırlıdır.' },
 ];
 
 export default function Terms() {
-  useEffect(() => { document.title = 'Kullanım Koşulları — Butiq Studio'; }, []);
+  useSEO({
+    title: 'Kullanım Koşulları',
+    description: 'Butiq Yazılım kullanım koşulları. Hizmet kapsamı, ödeme koşulları, fikri mülkiyet ve revizyon hakları hakkında bilgi edinin.',
+    path: '/kullanim-kosullari',
+  });
   return (
     <div className="min-h-screen bg-background">
       <div className="border-b border-border pt-28 pb-12 px-6">

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useSEO } from '../hooks/useSEO';
 import { motion, AnimatePresence } from 'motion/react';
 import { Mail, MapPin, Send, Clock, CheckCircle2, Phone } from 'lucide-react';
 import { db } from '../lib/firebase';
@@ -13,7 +14,7 @@ function WhatsAppIcon({ size = 24 }: { size?: number }) {
 }
 
 const contactItems = [
-  { icon: Mail, label: 'E-Posta', value: 'iletisim@butiqstudio.com', href: 'mailto:iletisim@butiqstudio.com' },
+  { icon: Mail, label: 'E-Posta', value: 'iletisim@butiqyazilim.com', href: 'mailto:iletisim@butiqyazilim.com' },
   { icon: WhatsAppIcon, label: 'WhatsApp', value: '+90 (536) 773 62 42', href: 'https://wa.me/905367736242' },
   { icon: MapPin, label: 'Ofis', value: 'Bahçelievler, İstanbul', href: null },
   { icon: Clock, label: 'Çalışma Saatleri', value: 'Pzt – Cum, 09:00 – 18:00', href: null },
@@ -56,7 +57,12 @@ function Field({ label, name, type, placeholder }: { label: string; name: string
 }
 
 export default function ContactPage() {
-  useEffect(() => { document.title = 'İletişim — Butiq Studio'; }, []);
+  useSEO({
+    title: 'İletişim — Proje Teklifi Alın',
+    description:
+      'Butiq Yazılım ile iletişime geçin. Web tasarımı, e-ticaret, kurumsal site veya mobil uygulama projeniz için hızlı teklif alın. İstanbul, Bahçelievler.',
+    path: '/iletisim',
+  });
 
   const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [agreed, setAgreed] = useState(false);

@@ -453,7 +453,7 @@ export default function AdminPanel() {
                         value={newItem.url}
                         onChange={e => setNewItem({ ...newItem, url: e.target.value })}
                         className="w-full bg-background border border-neutral-800 rounded-xl px-4 py-3 outline-none focus:border-accent text-sm"
-                        placeholder="https://urun.butiqstudio.com"
+                        placeholder="https://urun.butiqyazilim.com.tr"
                       />
                     </div>
                     <div className="md:col-span-2">

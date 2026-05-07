@@ -1,17 +1,21 @@
-import { useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
+import { useSEO } from '../hooks/useSEO';
 
 const sections = [
-  { title: '1. Veri Toplama', text: 'Butiq Studio olarak, hizmetlerimizi sağlamak ve iyileştirmek amacıyla yalnızca gerekli olan verileri topluyoruz. Bu veriler, iletişim formları aracılığıyla sağladığınız isim ve e-posta adresini içerebilir.' },
+  { title: '1. Veri Toplama', text: 'Butiq Yazılım olarak, hizmetlerimizi sağlamak ve iyileştirmek amacıyla yalnızca gerekli olan verileri topluyoruz. Bu veriler, iletişim formları aracılığıyla sağladığınız isim ve e-posta adresini içerebilir.' },
   { title: '2. Veri Kullanımı', text: 'Toplanan bilgiler, taleplerinize yanıt vermek, projeleriniz hakkında bilgi sağlamak ve bültenimize kayıt olmanız durumunda güncellemeleri paylaşmak için kullanılır. Verileriniz asla üçüncü şahıslara satılmaz.' },
   { title: '3. Çerezler', text: 'Web sitemiz deneyiminizi iyileştirmek için temel çerezler kullanabilir. Tarayıcı ayarlarınızdan çerez tercihlerinizi yönetebilirsiniz.' },
-  { title: '4. İletişim', text: 'Gizlilik politikamız hakkında sorularınız için iletisim@butiqstudio.com adresi üzerinden bizimle iletişime geçebilirsiniz.' },
+  { title: '4. İletişim', text: 'Gizlilik politikamız hakkında sorularınız için iletisim@butiqyazilim.com adresi üzerinden bizimle iletişime geçebilirsiniz.' },
 ];
 
 export default function Privacy() {
-  useEffect(() => { document.title = 'Gizlilik Politikası — Butiq Studio'; }, []);
+  useSEO({
+    title: 'Gizlilik Politikası',
+    description: 'Butiq Yazılım gizlilik politikası. Kişisel verilerinizin nasıl toplandığı, kullanıldığı ve korunduğu hakkında bilgi edinin.',
+    path: '/gizlilik',
+  });
   return (
     <div className="min-h-screen bg-background">
       <div className="border-b border-border pt-28 pb-12 px-6">

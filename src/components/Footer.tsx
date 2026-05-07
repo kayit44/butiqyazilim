@@ -41,8 +41,8 @@ export default function Footer() {
               <h2
                 className="font-bold text-primary leading-[0.96]"
                 style={{
-                  fontFamily:    'var(--font-display)',
-                  fontSize:      'clamp(2.6rem, 6vw, 5.5rem)',
+                  fontFamily: 'var(--font-display)',
+                  fontSize: 'clamp(2.6rem, 6vw, 5.5rem)',
                   letterSpacing: '-0.05em',
                 }}
               >
@@ -146,11 +146,11 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3.5">
               {[
-                { label: 'E-Ticaret Sitesi',  href: '/hizmet/e-commerce' },
-                { label: 'Kurumsal Web',       href: '/hizmet/corporate'  },
-                { label: 'Kişisel Site',       href: '/hizmet/personal'   },
-                { label: 'Mobil Uygulama',     href: '/hizmet/mobile-dev' },
-                { label: 'Hazır Ürünler',      href: '/urunler'           },
+                { label: 'E-Ticaret Sitesi', href: '/hizmet/e-commerce' },
+                { label: 'Kurumsal Web', href: '/hizmet/corporate' },
+                { label: 'Kişisel Site', href: '/hizmet/personal' },
+                { label: 'Mobil Uygulama', href: '/hizmet/mobile-dev' },
+                { label: 'Hazır Ürünler', href: '/urunler' },
               ].map(item => (
                 <li key={item.label}>
                   <Link
@@ -172,12 +172,12 @@ export default function Footer() {
             </h4>
             <div className="space-y-4">
               <a
-                href="mailto:iletisim@butiqstudio.com"
+                href="mailto:iletisim@butiqyazilim.com"
                 className="flex items-start gap-2.5 text-[13px] transition-colors duration-200 hover:text-primary"
                 style={{ color: 'var(--color-secondary)' }}
               >
                 <Mail size={13} className="mt-0.5 shrink-0" />
-                iletisim@butiqstudio.com
+                iletisim@butiqyazilim.com
               </a>
               <a
                 href="https://wa.me/905367736242"
@@ -203,7 +203,7 @@ export default function Footer() {
           style={{ borderTop: '1px solid var(--color-border)' }}
         >
           <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'rgba(138,136,128,0.3)', letterSpacing: '0.08em' }}>
-            © 2026 Butiq Studio — Tüm hakları saklıdır.
+            © 2026 Butiq Yazılım — Tüm hakları saklıdır.
           </p>
           <div className="flex items-center gap-6" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'rgba(138,136,128,0.3)' }}>
             <Link to="/gizlilik" className="hover:opacity-60 transition-opacity duration-200">

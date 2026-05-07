@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSEO } from '../hooks/useSEO';
 import { motion, AnimatePresence } from 'motion/react';
 import { db } from '../lib/firebase';
 import { collection, query, getDocs, orderBy } from 'firebase/firestore';
@@ -8,7 +9,12 @@ import { ArrowLeft, ExternalLink, X, Maximize2 } from 'lucide-react';
 import PhoneFrame from '../components/PhoneFrame';
 
 export default function ProjectsPage() {
-  useEffect(() => { document.title = 'Projeler — Butiq Studio'; }, []);
+  useSEO({
+    title: 'Projeler — Portföyümüz',
+    description:
+      'Butiq Yazılım tarafından geliştirilen web tasarım, e-ticaret ve yazılım projelerini inceleyin. Gerçek müşteri projeleri ve referanslar.',
+    path: '/projeler',
+  });
 
   const [dynamicProjects, setDynamicProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -99,7 +105,7 @@ export default function ProjectsPage() {
               Neler yaptık?
             </motion.h1>
           </div>
-          
+
         </div>
       </div>
 

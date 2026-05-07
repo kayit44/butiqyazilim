@@ -1,12 +1,13 @@
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, Suspense } from 'react';
 import Hero from './Hero';
 import ParallaxImage from './ParallaxImage';
+import { useSEO } from '../hooks/useSEO';
 
-const Services       = lazy(() => import('./Services'));
-const Process        = lazy(() => import('./Process'));
+const Services = lazy(() => import('./Services'));
+const Process = lazy(() => import('./Process'));
 const ProductsTeaser = lazy(() => import('./ProductsTeaser'));
-const Projects       = lazy(() => import('./Projects'));
-const Faq            = lazy(() => import('./Faq'));
+const Projects = lazy(() => import('./Projects'));
+const Faq = lazy(() => import('./Faq'));
 
 function Placeholder({ light = false }: { light?: boolean }) {
   return (
@@ -14,16 +15,19 @@ function Placeholder({ light = false }: { light?: boolean }) {
       className="py-24 border-t"
       style={{
         backgroundColor: light ? 'var(--color-light)' : 'var(--color-background)',
-        borderColor:     light ? 'var(--color-light-border)' : 'var(--color-border)',
+        borderColor: light ? 'var(--color-light-border)' : 'var(--color-border)',
       }}
     />
   );
 }
 
 export default function Home() {
-  useEffect(() => {
-    document.title = 'Butiq Studio — Web Tasarım & Yazılım Geliştirme';
-  }, []);
+  useSEO({
+    title: 'Web Tasarım & Özel Yazılım Geliştirme İstanbul',
+    description:
+      'İstanbul merkezli Butiq Yazılım ile profesyonel web tasarımı, e-ticaret çözümleri, kurumsal web siteleri ve mobil uygulama geliştirme hizmetleri alın. React, Next.js uzmanı dijital ajans.',
+    path: '/',
+  });
 
   return (
     <>
@@ -32,7 +36,7 @@ export default function Home() {
 
 
       {/* 2 — Hizmetler (krem) */}
-      <div id="hizmetler-wrapper">
+      <div id="hizmetler">
         <Suspense fallback={<Placeholder light />}>
           <Services />
         </Suspense>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useSEO } from '../hooks/useSEO';
 import { motion } from 'motion/react';
 import { PRODUCTS as STATIC_PRODUCTS } from '../constants';
 import { db } from '../lib/firebase';
@@ -18,7 +19,12 @@ interface Product {
 }
 
 export default function ProductsPage() {
-  useEffect(() => { document.title = 'SaaS Ürünlerimiz — Butiq Studio'; }, []);
+  useSEO({
+    title: 'SaaS Ürünlerimiz — Hazır Yazılım Çözümleri',
+    description:
+      'Butiq Yazılım\'nun hazır SaaS çözümlerini keşfedin. Restoran yönetim sistemi, randevu uygulaması ve daha fazlası. Hemen kullanmaya başlayın.',
+    path: '/urunler',
+  });
 
   const [dbProducts, setDbProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);

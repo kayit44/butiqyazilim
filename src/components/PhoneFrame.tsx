@@ -2,9 +2,10 @@ interface PhoneFrameProps {
   src: string;
   alt?: string;
   width?: number;
+  lazy?: boolean;
 }
 
-export default function PhoneFrame({ src, alt = '', width = 140 }: PhoneFrameProps) {
+export default function PhoneFrame({ src, alt = '', width = 140, lazy = true }: PhoneFrameProps) {
   const scale = width / 248;
 
   const btn = (style: React.CSSProperties) => (
@@ -52,9 +53,9 @@ export default function PhoneFrame({ src, alt = '', width = 140 }: PhoneFramePro
           src={src}
           alt={alt}
           referrerPolicy="no-referrer"
-          loading="eager"
+          loading={lazy ? 'lazy' : 'eager'}
           decoding="async"
-          fetchPriority="high"
+          fetchPriority={lazy ? 'auto' : 'high'}
           style={{
             position: 'absolute',
             inset: 0,

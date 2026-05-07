@@ -98,7 +98,7 @@ export default function Projects() {
                       <div className="absolute inset-0 flex items-center justify-center"
                         style={{ background: 'linear-gradient(135deg,#1a1a2e 0%,#0f0f1a 100%)' }}>
                         <div className="group-hover:scale-[1.03] transition-transform duration-700 ease-out">
-                          <PhoneFrame src={featuredProjects[0].image} alt={featuredProjects[0].title} width={180} />
+                          <PhoneFrame src={featuredProjects[0].image} alt={featuredProjects[0].title} width={180} lazy={false} />
                         </div>
                       </div>
                     ) : (
@@ -148,7 +148,7 @@ export default function Projects() {
                       <div className="absolute inset-0 flex items-center justify-center"
                         style={{ background: 'linear-gradient(135deg,#1a1a2e 0%,#0f0f1a 100%)' }}>
                         <div className="group-hover:scale-[1.03] transition-transform duration-700 ease-out">
-                          <PhoneFrame src={featuredProjects[1].image} alt={featuredProjects[1].title} width={160} />
+                          <PhoneFrame src={featuredProjects[1].image} alt={featuredProjects[1].title} width={160} lazy={false} />
                         </div>
                       </div>
                     ) : (

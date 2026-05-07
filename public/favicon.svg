@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Dark background -->
+  <rect width="32" height="32" rx="6" fill="#0e0e10"/>
+  <!-- Bold "b" letter in brand cream -->
+  <text x="7" y="24" font-family="Arial Black, Helvetica Neue, sans-serif" font-weight="900" font-size="21" fill="#F2EFE9">b</text>
+  <!-- Yellow accent square (brand "." dot) -->
+  <rect x="21" y="19" width="5" height="5" rx="1" fill="#E8C547"/>
+</svg>

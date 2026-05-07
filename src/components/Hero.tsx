@@ -23,8 +23,8 @@ const SLIDES = [
     cta:   'E-Ticaret',
   },
   {
-    image:   '/kurums.jpg',
-    imageMd: '/kurums-w.jpg',
+    image:   '/kurums1.jpg',
+    imageMd: '/kurums1-w.jpg',
     tag:   'Kurumsal Web',
     line1: 'GÜÇLÜ',
     line2: 'KURUMSAL',

@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+import type React from 'react';
 import { motion } from 'motion/react';
 import { PROJECTS as STATIC_PROJECTS } from '../constants';
 import { db } from '../lib/firebase';
 import { collection, getDocs, orderBy, query, limit } from 'firebase/firestore';
 import { ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import PhoneFrame from './PhoneFrame';
 
 interface Project {
   id?: string;
@@ -14,6 +16,19 @@ interface Project {
   image: string;
   tags: string[];
   url: string;
+}
+
+function CardLink({ project, className, style, children }: {
+  project: Project; className?: string; style?: React.CSSProperties; children: React.ReactNode;
+}) {
+  if (project.serviceId === 'mobile-dev') {
+    return <Link to="/hizmet/mobile-dev" className={className} style={style}>{children}</Link>;
+  }
+  return (
+    <a href={project.url || '#'} target={project.url ? '_blank' : undefined} rel="noopener noreferrer" className={className} style={style}>
+      {children}
+    </a>
+  );
 }
 
 export default function Projects() {
@@ -74,19 +89,26 @@ export default function Projects() {
                   transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                   className="md:col-span-2"
                 >
-                  <a
-                    href={featuredProjects[0].url || '#'}
-                    target={featuredProjects[0].url ? '_blank' : undefined}
-                    rel="noopener noreferrer"
+                  <CardLink
+                    project={featuredProjects[0]}
                     className="group block relative overflow-hidden border border-border"
                     style={{ borderRadius: '2px', minHeight: '420px' }}
                   >
-                    <img
-                      src={featuredProjects[0].image}
-                      alt={featuredProjects[0].title}
-                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-[900ms] ease-out"
-                      referrerPolicy="no-referrer"
-                    />
+                    {featuredProjects[0].serviceId === 'mobile-dev' ? (
+                      <div className="absolute inset-0 flex items-center justify-center"
+                        style={{ background: 'linear-gradient(135deg,#1a1a2e 0%,#0f0f1a 100%)' }}>
+                        <div className="group-hover:scale-[1.03] transition-transform duration-700 ease-out">
+                          <PhoneFrame src={featuredProjects[0].image} alt={featuredProjects[0].title} width={180} />
+                        </div>
+                      </div>
+                    ) : (
+                      <img
+                        src={featuredProjects[0].image}
+                        alt={featuredProjects[0].title}
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-[900ms] ease-out"
+                        referrerPolicy="no-referrer"
+                      />
+                    )}
                     <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/30 to-transparent" />
 
                     <div className="absolute inset-0 flex flex-col justify-end p-8">
@@ -107,7 +129,7 @@ export default function Projects() {
                         İncele <ArrowUpRight size={13} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
                       </div>
                     </div>
-                  </a>
+                  </CardLink>
                 </motion.div>
 
                 {/* Second card — tall right */}
@@ -117,19 +139,26 @@ export default function Projects() {
                   viewport={{ once: true, margin: '-60px' }}
                   transition={{ delay: 0.12, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <a
-                    href={featuredProjects[1].url || '#'}
-                    target={featuredProjects[1].url ? '_blank' : undefined}
-                    rel="noopener noreferrer"
+                  <CardLink
+                    project={featuredProjects[1]}
                     className="group block relative overflow-hidden border border-border h-full"
                     style={{ borderRadius: '2px', minHeight: '420px' }}
                   >
-                    <img
-                      src={featuredProjects[1].image}
-                      alt={featuredProjects[1].title}
-                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-[900ms] ease-out"
-                      referrerPolicy="no-referrer"
-                    />
+                    {featuredProjects[1].serviceId === 'mobile-dev' ? (
+                      <div className="absolute inset-0 flex items-center justify-center"
+                        style={{ background: 'linear-gradient(135deg,#1a1a2e 0%,#0f0f1a 100%)' }}>
+                        <div className="group-hover:scale-[1.03] transition-transform duration-700 ease-out">
+                          <PhoneFrame src={featuredProjects[1].image} alt={featuredProjects[1].title} width={160} />
+                        </div>
+                      </div>
+                    ) : (
+                      <img
+                        src={featuredProjects[1].image}
+                        alt={featuredProjects[1].title}
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-[900ms] ease-out"
+                        referrerPolicy="no-referrer"
+                      />
+                    )}
                     <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
 
                     <div className="absolute inset-0 flex flex-col justify-end p-6">
@@ -150,7 +179,7 @@ export default function Projects() {
                         İncele <ArrowUpRight size={12} />
                       </div>
                     </div>
-                  </a>
+                  </CardLink>
                 </motion.div>
               </div>
             )}
@@ -166,21 +195,30 @@ export default function Projects() {
                     viewport={{ once: true, margin: '-60px' }}
                     transition={{ delay: i * 0.08, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
                   >
-                    <a
-                      href={project.url || '#'}
-                      target={project.url ? '_blank' : undefined}
-                      rel="noopener noreferrer"
+                    <CardLink
+                      project={project}
                       className="group block border border-border overflow-hidden"
                       style={{ borderRadius: '2px' }}
                     >
                       <div className="relative overflow-hidden bg-surface" style={{ height: '220px' }}>
-                        <img
-                          src={project.image}
-                          alt={project.title}
-                          className="w-full h-full object-cover group-hover:scale-[1.06] transition-transform duration-700 ease-out"
-                          referrerPolicy="no-referrer"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent" />
+                        {project.serviceId === 'mobile-dev' ? (
+                          <div className="absolute inset-0 flex items-center justify-center"
+                            style={{ background: 'linear-gradient(135deg,#1a1a2e 0%,#0f0f1a 100%)' }}>
+                            <div className="group-hover:scale-[1.04] transition-transform duration-700 ease-out">
+                              <PhoneFrame src={project.image} alt={project.title} width={88} />
+                            </div>
+                          </div>
+                        ) : (
+                          <>
+                            <img
+                              src={project.image}
+                              alt={project.title}
+                              className="w-full h-full object-cover group-hover:scale-[1.06] transition-transform duration-700 ease-out"
+                              referrerPolicy="no-referrer"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent" />
+                          </>
+                        )}
                       </div>
                       <div className="p-5 flex items-start justify-between gap-3">
                         <div>
@@ -198,7 +236,7 @@ export default function Projects() {
                           <ArrowUpRight size={12} className="text-secondary group-hover:text-white transition-colors duration-200" />
                         </div>
                       </div>
-                    </a>
+                    </CardLink>
                   </motion.div>
                 ))}
               </div>

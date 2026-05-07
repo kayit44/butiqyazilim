@@ -5,6 +5,7 @@ import { collection, query, getDocs, orderBy } from 'firebase/firestore';
 import { PROJECTS as STATIC_PROJECTS, SERVICES } from '../constants';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, ExternalLink, X, Maximize2 } from 'lucide-react';
+import PhoneFrame from '../components/PhoneFrame';
 
 export default function ProjectsPage() {
   useEffect(() => { document.title = 'Projeler — Butiq Studio'; }, []);
@@ -122,55 +123,76 @@ export default function ProjectsPage() {
                   className="group"
                 >
                   {/* Image */}
-                  <div
-                    className="relative aspect-video overflow-hidden mb-5 border"
-                    style={{ borderColor: 'var(--color-light-border)', borderRadius: '2px', background: 'var(--color-light-alt)' }}
-                  >
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-700 ease-out cursor-zoom-in"
-                      referrerPolicy="no-referrer"
-                      onClick={() => setSelectedImage(project.image)}
-                    />
-
-                    {/* Action buttons */}
-                    <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                      <button
+                  {project.serviceId === 'mobile-dev' ? (
+                    <div
+                      className="relative mb-5 border flex items-center justify-center"
+                      style={{
+                        borderColor: 'var(--color-light-border)',
+                        borderRadius: '2px',
+                        background: 'linear-gradient(135deg,#1a1a2e 0%,#0f0f1a 100%)',
+                        padding: '32px 0',
+                      }}
+                    >
+                      <div className="group-hover:scale-[1.02] transition-transform duration-700 ease-out">
+                        <PhoneFrame src={project.image} alt={project.title} width={180} />
+                      </div>
+                      {/* Service badge */}
+                      <div className="absolute bottom-3 left-3">
+                        <span
+                          className="font-mono text-[9px] uppercase tracking-[0.15em] px-2.5 py-1 backdrop-blur-sm"
+                          style={{ background: 'rgba(245,243,239,0.85)', color: 'var(--color-light-text)', borderRadius: '2px' }}
+                        >
+                          {SERVICES.find(s => s.id === project.serviceId)?.title || 'Genel Proje'}
+                        </span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div
+                      className="relative aspect-video overflow-hidden mb-5 border"
+                      style={{ borderColor: 'var(--color-light-border)', borderRadius: '2px', background: 'var(--color-light-alt)' }}
+                    >
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-700 ease-out cursor-zoom-in"
+                        referrerPolicy="no-referrer"
                         onClick={() => setSelectedImage(project.image)}
-                        className="w-9 h-9 bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors"
-                        style={{ borderRadius: '2px' }}
-                      >
-                        <Maximize2 size={14} style={{ color: 'var(--color-light-text)' }} />
-                      </button>
-                      {project.url && (
-                        <a
-                          href={project.url}
-                          target="_blank"
-                          rel="noreferrer"
+                      />
+
+                      {/* Action buttons */}
+                      <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        <button
+                          onClick={() => setSelectedImage(project.image)}
                           className="w-9 h-9 bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors"
                           style={{ borderRadius: '2px' }}
-                          onClick={e => e.stopPropagation()}
                         >
-                          <ExternalLink size={14} style={{ color: 'var(--color-light-text)' }} />
-                        </a>
-                      )}
-                    </div>
+                          <Maximize2 size={14} style={{ color: 'var(--color-light-text)' }} />
+                        </button>
+                        {project.url && (
+                          <a
+                            href={project.url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="w-9 h-9 bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors"
+                            style={{ borderRadius: '2px' }}
+                            onClick={e => e.stopPropagation()}
+                          >
+                            <ExternalLink size={14} style={{ color: 'var(--color-light-text)' }} />
+                          </a>
+                        )}
+                      </div>
 
-                    {/* Service badge */}
-                    <div className="absolute bottom-3 left-3">
-                      <span
-                        className="font-mono text-[9px] uppercase tracking-[0.15em] px-2.5 py-1 backdrop-blur-sm"
-                        style={{
-                          background: 'rgba(245,243,239,0.85)',
-                          color: 'var(--color-light-text)',
-                          borderRadius: '2px',
-                        }}
-                      >
-                        {SERVICES.find(s => s.id === project.serviceId)?.title || 'Genel Proje'}
-                      </span>
+                      {/* Service badge */}
+                      <div className="absolute bottom-3 left-3">
+                        <span
+                          className="font-mono text-[9px] uppercase tracking-[0.15em] px-2.5 py-1 backdrop-blur-sm"
+                          style={{ background: 'rgba(245,243,239,0.85)', color: 'var(--color-light-text)', borderRadius: '2px' }}
+                        >
+                          {SERVICES.find(s => s.id === project.serviceId)?.title || 'Genel Proje'}
+                        </span>
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   {/* Meta */}
                   <div className="flex items-start justify-between gap-4">

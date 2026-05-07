@@ -49,7 +49,7 @@ export default function Services() {
             initial={{ opacity: 0, y: 12 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.25 }}
-            className="text-[14px] leading-relaxed max-w-xs"
+            className="text-[16px] sm:text-[14px] leading-relaxed max-w-xs"
             style={{ color: 'var(--color-light-secondary)' }}
           >
             İşini özenle yapan bir butik stüdyonun elinden çıkan pratik dijital çözümler.
@@ -99,7 +99,7 @@ export default function Services() {
                   >
                     {service.title}
                   </h3>
-                  <p className="text-[12px] leading-relaxed hidden sm:block" style={{ color: 'var(--color-light-secondary)' }}>
+                  <p className="text-[15px] sm:text-[13px] leading-relaxed" style={{ color: 'var(--color-light-secondary)' }}>
                     {service.description}
                   </p>
                 </div>

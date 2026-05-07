@@ -83,7 +83,7 @@ export default function Footer() {
             <div className="mb-6">
               <Logo size="sm" />
             </div>
-            <p className="text-[13px] leading-relaxed mb-6 max-w-[220px]" style={{ color: 'var(--color-secondary)' }}>
+            <p className="text-[15px] sm:text-[13px] leading-relaxed mb-6 max-w-[220px]" style={{ color: 'var(--color-secondary)' }}>
               Markanızın dijital dünyada öne çıkması için özel yazılım ve tasarım çözümleri.
             </p>
             <div className="flex items-center gap-1.5 mb-6">
@@ -119,7 +119,7 @@ export default function Footer() {
                       <a
                         href={link.href}
                         onClick={(e: any) => handleNavClick(e, link.href)}
-                        className="text-[13px] transition-colors duration-200 hover:text-primary"
+                        className="text-[15px] sm:text-[13px] transition-colors duration-200 hover:text-primary"
                         style={{ color: 'var(--color-secondary)' }}
                       >
                         {link.label}
@@ -127,7 +127,7 @@ export default function Footer() {
                     ) : (
                       <Link
                         to={link.href}
-                        className="text-[13px] transition-colors duration-200 hover:text-primary"
+                        className="text-[15px] sm:text-[13px] transition-colors duration-200 hover:text-primary"
                         style={{ color: 'var(--color-secondary)' }}
                       >
                         {link.label}
@@ -173,7 +173,7 @@ export default function Footer() {
             <div className="space-y-4">
               <a
                 href="mailto:iletisim@butiqyazilim.com"
-                className="flex items-start gap-2.5 text-[13px] transition-colors duration-200 hover:text-primary"
+                className="flex items-start gap-2.5 text-[15px] sm:text-[13px] transition-colors duration-200 hover:text-primary"
                 style={{ color: 'var(--color-secondary)' }}
               >
                 <Mail size={13} className="mt-0.5 shrink-0" />
@@ -183,13 +183,13 @@ export default function Footer() {
                 href="https://wa.me/905367736242"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-start gap-2.5 text-[13px] transition-colors duration-200 hover:text-primary"
+                className="flex items-start gap-2.5 text-[15px] sm:text-[13px] transition-colors duration-200 hover:text-primary"
                 style={{ color: 'var(--color-secondary)' }}
               >
                 <Phone size={13} className="mt-0.5 shrink-0" strokeWidth={1.5} />
                 +90 (536) 773 62 42
               </a>
-              <p className="flex items-start gap-2.5 text-[13px]" style={{ color: 'var(--color-secondary)' }}>
+              <p className="flex items-start gap-2.5 text-[15px] sm:text-[13px]" style={{ color: 'var(--color-secondary)' }}>
                 <MapPin size={13} className="mt-0.5 shrink-0" strokeWidth={1.5} />
                 Bahçelievler, İstanbul
               </p>
